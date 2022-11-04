@@ -1,0 +1,8 @@
+{
+  "extends": ["stylelint-config-standard", "stylelint-config-prettier"],
+  "rules": {
+    "color-hex-case": "upper",
+    "selector-class-pattern": null,
+    "string-quotes": "single"
+  }
+}
