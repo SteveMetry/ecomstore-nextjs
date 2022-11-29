@@ -5,12 +5,17 @@ import {
 } from "@heroicons/react/24/outline";
 
 import { Product } from ".entities/product.interface";
+import { useCartItemsStore } from ".hooks/cartItemsStore";
 
 interface ProductSearchProp {
+  displayAmount: boolean;
   setProducts: Dispatch<SetStateAction<Product[]>>;
 }
 
-export const ProductSearch = ({ setProducts }: ProductSearchProp) => {
+export const ProductSearch = ({
+  displayAmount,
+  setProducts
+}: ProductSearchProp) => {
   const categories = [
     {
       key: "dummyJSON",
@@ -27,6 +32,10 @@ export const ProductSearch = ({ setProducts }: ProductSearchProp) => {
   ];
   const [searchCategory, setSearchCategory] = useState("dummyJSON");
   const [searchInput, setSearchInput] = useState("");
+  const [cartItems, setDisplayCartItems] = useCartItemsStore((state) => [
+    state.cartItems,
+    state.setDisplayCartItems
+  ]);
 
   const searchTyped = () => {
     if (searchCategory === "dummyJSON") {
@@ -48,6 +57,11 @@ export const ProductSearch = ({ setProducts }: ProductSearchProp) => {
           setProducts(searchResults);
         });
     }
+  };
+
+  const onCartBtnClick = () => {
+    document.body.classList.add("overflow-y-hidden");
+    setDisplayCartItems(true);
   };
 
   return (
@@ -73,7 +87,7 @@ export const ProductSearch = ({ setProducts }: ProductSearchProp) => {
         <button
           className={`btn px-4 border border-solid rounded-r-lg focus:outline-none focus:ring-0 ${
             searchInput.trim().length < 3
-              ? "border-gray-500 bg-gray-500 text-white"
+              ? "border-gray-500 bg-gray-500 cursor-not-allowed text-white"
               : "bg-white hover:bg-gray-200"
           }`}
           onClick={searchTyped}
@@ -82,13 +96,12 @@ export const ProductSearch = ({ setProducts }: ProductSearchProp) => {
           <MagnifyingGlassIcon className="w-4" />
         </button>
       </div>
-      <button className="flex">
+      <button className="flex" onClick={onCartBtnClick}>
         <ShoppingCartIcon className="h-full text-white w-10" />
-        <span
-          id="cartAmount"
-          className="bg-white px-2 rounded-full relative right-4"
-        >
-          0
+        <span className="bg-white px-2 rounded-full relative right-4">
+          {displayAmount
+            ? cartItems.map((item) => item.amount).reduce((a, b) => a + b, 0)
+            : 0}
         </span>
       </button>
     </>

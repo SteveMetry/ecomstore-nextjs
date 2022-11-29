@@ -41,3 +41,15 @@ blockquote {
 }
 
 // END: undo TailwindCSS preflight styling
+
+// Firefox
+input[type=number] {
+  -moz-appearance: textfield;
+
+  // Chrome, Safari, Edge, Opera
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}

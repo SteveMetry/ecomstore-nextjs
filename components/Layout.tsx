@@ -12,6 +12,7 @@ export const Layout = ({
 }: PropsWithChildren<LayoutProp>) => (
   <>
     <CustomNavbar>{navbarChildren}</CustomNavbar>
+    <div className="h-20"></div>
     {children}
   </>
 );

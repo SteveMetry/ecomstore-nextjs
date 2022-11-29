@@ -19,6 +19,7 @@
       ".components/*": ["components/*"],
       ".data/*": ["public/data/*"],
       ".entities/*": ["entities/*"],
+      ".hooks/*": ["hooks/*"],
       ".img/*": ["public/img/*"],
       ".pages/*": ["pages/*"],
       ".styles/*": ["styles/*"]
