@@ -82,11 +82,11 @@ export const ProductSearch = ({ setProducts }: ProductSearchProp) => {
           <MagnifyingGlassIcon className="w-4" />
         </button>
       </div>
-      <button>
+      <button className="flex">
         <ShoppingCartIcon className="h-full text-white w-10" />
         <span
           id="cartAmount"
-          className="bg-white px-2 rounded-full absolute top-3.5"
+          className="bg-white px-2 rounded-full relative right-4"
         >
           0
         </span>

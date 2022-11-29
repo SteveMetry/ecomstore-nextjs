@@ -9,16 +9,25 @@ import {
 import SiteLogo from ".img/logo.png";
 
 export const CustomNavbar = ({ children }: PropsWithChildren<object>) => (
-  <nav className="flex items-center shadow-2xl p-4 bg-neutral-700">
-    <Link href="/">
-      <Image src={SiteLogo} alt="Site Logo" height={44} />
-    </Link>
-    <div className="flex flex-auto justify-center">{children}</div>
-    <Link href="/contact" className="h-full text-white w-8 mx-6">
-      <QuestionMarkCircleIcon />
-    </Link>
-    <Link href="/login" className="h-full text-white w-8">
-      <ArrowRightOnRectangleIcon />
-    </Link>
+  <nav className="flex flex-col shadow-2xl p-4 bg-neutral-700">
+    <div className="flex items-center justify-between">
+      <Link href="/">
+        <Image src={SiteLogo} alt="Site Logo" height={44} />
+      </Link>
+      <div className="hidden sm:flex flex-auto justify-center mx-4">
+        {children}
+      </div>
+      <div className="flex">
+        <Link href="/contact" className="h-full text-white w-8 mr-6">
+          <QuestionMarkCircleIcon />
+        </Link>
+        <Link href="/login" className="h-full text-white w-8">
+          <ArrowRightOnRectangleIcon />
+        </Link>
+      </div>
+    </div>
+    <div className="flex sm:hidden flex-auto justify-center mt-4">
+      {children}
+    </div>
   </nav>
 );
