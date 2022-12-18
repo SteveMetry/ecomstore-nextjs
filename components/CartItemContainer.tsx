@@ -59,7 +59,6 @@ export const CartItemContainer = () => {
           className={`
             px-4
             py-1.5
-            bg-blue-400
             text-white
             font-bold
             rounded
@@ -69,8 +68,8 @@ export const CartItemContainer = () => {
             mt-6
             ${
               cartItems.length > 0
-                ? "pointer-events-auto"
-                : "pointer-events-none cursor-not-allowed"
+                ? "pointer-events-auto bg-blue-400"
+                : "pointer-events-none bg-blue-200"
             }
           `}
         >
