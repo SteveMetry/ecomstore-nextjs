@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import { CartItemBlock } from ".components/CartItemBlock";
@@ -26,7 +27,7 @@ export default function CheckoutPage() {
         <h1
           className="
             font-thin
-            max-sm:text-4xl
+            text-4xl
             md:text-3xl
             text-white
           "
@@ -34,8 +35,9 @@ export default function CheckoutPage() {
           CHECKOUT
         </h1>
       }
+      className="flex flex-col-reverse md:flex-row md:m-8 bg-slate-100 min-h-screen"
     >
-      <div className="preview-cart-container bg-white rounded m-2 p-2">
+      <div className="preview-cart-container bg-inherit rounded m-2 p-2">
         {userCartItems.map((item, index) => (
           <CartItemBlock
             key={`cart-item-${index}`}
@@ -44,11 +46,27 @@ export default function CheckoutPage() {
           ></CartItemBlock>
         ))}
       </div>
-      <div className="cart-info-container grid grid-cols-2">
+      <div className="cart-info-container grid grid-cols-2 bg-white rounded md:w-1/2 p-6 m-6 mt-24 md:mt-2">
         <h4>Tax:</h4>
-        <h4>${totalPrice / 10}</h4>
+        <h4 className="text-right">${totalPrice / 10}</h4>
         <h4>Total:</h4>
-        <h4>${totalPrice}</h4>
+        <h4 className="text-right">${totalPrice + totalPrice / 10}</h4>
+        <Link
+          href="/pay"
+          className="
+            bg-blue-400
+            rounded
+            w-full
+            flex
+            col-span-2
+            h-12
+            justify-center
+            items-center
+            text-white
+          "
+        >
+          Pay Now
+        </Link>
       </div>
     </Layout>
   );

@@ -76,6 +76,7 @@ export default function Home() {
           setProducts={setProducts}
         />
       }
+      className="bg-slate-100 min-h-screen"
     >
       <div className="flex justify-center items-center">
         <button onClick={() => setDisplayCategories(!displayCategories)}>
@@ -85,7 +86,7 @@ export default function Home() {
             <PlusIcon className="w-4" />
           )}
         </button>
-        <h1 className="ml-4">Category: {chosenCategory.toUpperCase()}</h1>
+        <h1 className="ml-4">Categories: {chosenCategory.toUpperCase()}</h1>
       </div>
       <div
         className={`${
@@ -106,7 +107,7 @@ export default function Home() {
         {products.map((prod) => (
           <div
             key={prod.id}
-            className="border-2 border-black rounded-xl flex flex-col justify-between items-center p-4"
+            className="shadow-md rounded-xl flex flex-col justify-between items-center p-4 bg-white"
           >
             <div className="flex flex-col items-center w-full">
               <h4>{prod.brand}</h4>

@@ -49,8 +49,6 @@ export const ProductAmount = ({
           border-solid
           border-gray-300
           rounded
-          focus:text-gray-700
-          focus:bg-white
         "
         placeholder="Amount"
         min={0}
