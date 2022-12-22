@@ -1,6 +1,5 @@
 import { useUsersStore } from ".hooks/usersStore";
 import Image from "next/image";
-import { useRouter } from "next/router";
 import { FormEvent, ChangeEvent, useEffect, useState } from "react";
 import { User } from ".entities/user.interface";
 import { Layout } from ".components/Layout";
@@ -16,12 +15,22 @@ interface UserInput {
   gender?: string;
 }
 
+async function openUrl(url: string) {
+  window.location.replace(`/${url}`);
+}
+
 export default function ConsolePage() {
-  const router = useRouter();
   const usr = useUsersStore((state) => state.user);
+  const allUsers = useUsersStore((state) => state.usersList);
   const isUserDataValid = useUsersStore((state) => state.isUserDataValid);
   const updateUser = useUsersStore((state) => state.updateUser);
+  const logOutUser = useUsersStore((state) => state.logOutUser);
   const [user, setUser] = useState<User>();
+
+  if (usr == undefined) {
+    openUrl("login");
+  }
+
   const [userInputs, setUserInputs] = useState<UserInput>({
     username: usr?.username,
     password: usr?.password,
@@ -45,9 +54,14 @@ export default function ConsolePage() {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const updatedUser = { ...usr, ...userInputs };
-    if (isUserDataValid(updatedUser)) {
-      updateUser(updatedUser);
+    if (user) {
+      if (
+        isUserDataValid({ ...user, ...userInputs }).every(
+          (curVal: boolean) => curVal === true
+        )
+      ) {
+        updateUser({ ...user, ...userInputs });
+      } else return console.error("could not update user", userInputs);
     }
   };
 
@@ -170,7 +184,10 @@ export default function ConsolePage() {
                     border border-solid border-gray-300
                     rounded"
                 />
-                <button type="submit">Update Account</button>
+                <button>Update Account</button>
+                <button type="button" onClick={logOutUser}>
+                  Log Out
+                </button>
               </>
             }
           </form>

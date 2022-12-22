@@ -3,14 +3,15 @@ import { persist } from "zustand/middleware";
 import { User } from ".entities/user.interface";
 
 interface UserState {
-  user: User;
+  user: User | undefined;
   usersList: User[];
   addUser: (chosenUser: User) => boolean;
   removeUser: (chosenUser: User) => void;
   updateUser: (chosenUser: User) => void;
   userExist: (chosenUser: User) => boolean;
-  loginUser: (chosenUser: User) => void;
-  isUserDataValid: (chosenUser: User) => boolean;
+  loginUser: (chosenUser: User, redirect?: string) => void;
+  logOutUser: () => void;
+  isUserDataValid: (chosenUser: User) => boolean[];
 }
 
 const defaultUserList: User[] = [
@@ -66,11 +67,11 @@ const isUserValid = (chosenUser: User) => {
     /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(chosenUser.email),
     /^[a-zA-Z ]{2,}$/.test(chosenUser.firstname),
     /^[a-zA-Z ]{2,}$/.test(chosenUser.lastname),
-    !isNaN(chosenUser.age),
-    chosenUser.gender !== ""
+    !isNaN(chosenUser.age)
   ];
-  return testUserData.every((curVal: boolean) => curVal === true);
+  return testUserData;
 };
+
 const updateUserList = (usersList: User[], usr: User) => {
   usersList.map((item, index) => {
     if (item.id === usr.id) {
@@ -80,28 +81,30 @@ const updateUserList = (usersList: User[], usr: User) => {
   return usersList;
 };
 
+const defaultUser = {
+  id: 10,
+  mode: "customer",
+  username: "",
+  password: "",
+  phone: 0,
+  email: "",
+  firstname: "",
+  lastname: "",
+  age: 0,
+  gender: "Man",
+  image: "/img/half_person_icon.png",
+  cartItems: []
+};
+
 export const useUsersStore = create<UserState>()(
   persist((set, get) => ({
-    user: {
-      id: defaultUserList[defaultUserList.length - 1].id + 1,
-      mode: "customer",
-      username: "",
-      password: "",
-      phone: 0,
-      email: "",
-      firstname: "",
-      lastname: "",
-      age: 0,
-      gender: "",
-      image: "/img/half_person_icon.png",
-      cartItems: []
-    } as User,
+    user: undefined,
     usersList: defaultUserList,
     addUser: (chosenUser) => {
       const isUserDataValid = isUserValid(chosenUser);
-      if (isUserDataValid) {
+      if (isUserDataValid.every((curVal: boolean) => curVal === true)) {
         set((state) => ({ usersList: [...state.usersList, chosenUser] }));
-
+        console.log("added User");
         return true;
       }
       return false;
@@ -117,18 +120,27 @@ export const useUsersStore = create<UserState>()(
         user: updatedUser,
         usersList: updateUserList(state.usersList, updatedUser)
       }));
+      console.log(get().usersList);
     },
     userExist: (chosenUser) => {
       return !!get().usersList.find((item) => item.id === chosenUser.id);
     },
-    loginUser: (chosenUser) => {
+    loginUser: (chosenUser, redirect) => {
       set(() => ({
         user: chosenUser
       }));
+      console.log(get().user);
+      // window.location.replace(`${redirect ? `/${redirect}` : "/settings"}`);
       return true;
     },
     isUserDataValid: (chosenUser) => {
       return isUserValid(chosenUser);
+    },
+    logOutUser: () => {
+      set(() => ({
+        user: undefined
+      }));
+      window.location.reload();
     }
   }))
 );

@@ -4,6 +4,7 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Layout } from ".components/Layout";
 import { User } from ".entities/user.interface";
 import { useUsersStore } from ".hooks/usersStore";
+import Link from "next/link";
 
 interface UserInput {
   username?: string;
@@ -13,11 +14,16 @@ interface UserInput {
 export default function LoginPage() {
   const router = useRouter();
   const usersList = useUsersStore((state) => state.usersList);
+  const user = useUsersStore((state) => state.user);
   const [allUsers, setAllUsers] = useState<User[]>([]);
   const [userInputs, setUserInputs] = useState<UserInput>({});
   const [isLoginValid, setIsLoginValid] = useState(true);
   const loginUser = useUsersStore((state) => state.loginUser);
-
+  if (user) {
+    if (!!allUsers.find((item) => item.id === user.id)) {
+      router.push("/settings");
+    }
+  }
   useEffect(() => {
     setAllUsers(usersList);
   }, [usersList]);
@@ -40,7 +46,6 @@ export default function LoginPage() {
       setIsLoginValid(isValidPassword);
       if (isValidPassword) {
         loginUser(typedUser);
-        router.push("/settings");
       }
     }
   };
@@ -98,14 +103,15 @@ export default function LoginPage() {
           We never share your information with anyone else.
         </small>
         <button type="submit">Login</button>
-        <button
+        <Link
+          href="/onboarding"
           className="
             px-6 py-2 leading-tight
-            w-full
+            w-full text-center
           "
         >
           Create Account
-        </button>
+        </Link>
       </form>
     </Layout>
   );
