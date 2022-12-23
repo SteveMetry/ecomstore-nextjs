@@ -9,7 +9,7 @@ interface UserState {
   removeUser: (chosenUser: User) => void;
   updateUser: (chosenUser: User) => void;
   userExist: (chosenUser: User) => boolean;
-  loginUser: (chosenUser: User, redirect?: string) => void;
+  loginUser: (chosenUser: User, redirect?: string) => boolean;
   logOutUser: () => void;
   isUserDataValid: (chosenUser: User) => boolean[];
 }
@@ -59,14 +59,41 @@ const defaultUserList: User[] = [
   }
 ];
 
-const isUserValid = (chosenUser: User) => {
+function isEmailValid(usersList: User[], user: User) {
+  return (
+    /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(user.email) &&
+    !usersList.find(
+      (curUser) => curUser.id != user.id && curUser.email === user.email.trim()
+    )
+  );
+}
+
+function isPhoneValid(usersList: User[], user: User) {
+  return (
+    !isNaN(user.phone) &&
+    !usersList.find(
+      (curUser) => curUser.id != user.id && curUser.phone === user.phone
+    )
+  );
+}
+
+function isUsernameValid(usersList: User[], user: User) {
+  return (
+    /^[a-zA-Z ]{3,28}$/.test(user.username) &&
+    !usersList.find(
+      (curUser) =>
+        curUser.id != user.id && curUser.username === user.username.trim()
+    )
+  );
+}
+const isUserValid = (chosenUser: User, usersList: User[]) => {
   const testUserData = [
-    /^[a-zA-Z ]{3,}$/.test(chosenUser.username),
-    /^[a-zA-Z0-9 ]{3,}$/.test(chosenUser.password),
-    !isNaN(chosenUser.phone),
-    /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(chosenUser.email),
-    /^[a-zA-Z ]{2,}$/.test(chosenUser.firstname),
-    /^[a-zA-Z ]{2,}$/.test(chosenUser.lastname),
+    isUsernameValid(usersList, chosenUser),
+    /^[a-zA-Z0-9 ]{3,28}$/.test(chosenUser.password),
+    isPhoneValid(usersList, chosenUser),
+    isEmailValid(usersList, chosenUser),
+    /^[a-zA-Z ]{2,28}$/.test(chosenUser.firstname),
+    /^[a-zA-Z ]{2,28}$/.test(chosenUser.lastname),
     !isNaN(chosenUser.age)
   ];
   return testUserData;
@@ -101,10 +128,10 @@ export const useUsersStore = create<UserState>()(
     user: undefined,
     usersList: defaultUserList,
     addUser: (chosenUser) => {
-      const isUserDataValid = isUserValid(chosenUser);
+      const isUserDataValid = isUserValid(chosenUser, get().usersList);
       if (isUserDataValid.every((curVal: boolean) => curVal === true)) {
         set((state) => ({ usersList: [...state.usersList, chosenUser] }));
-        console.log("added User");
+        console.log("added User", get().usersList);
         return true;
       }
       return false;
@@ -134,7 +161,7 @@ export const useUsersStore = create<UserState>()(
       return true;
     },
     isUserDataValid: (chosenUser) => {
-      return isUserValid(chosenUser);
+      return isUserValid(chosenUser, get().usersList);
     },
     logOutUser: () => {
       set(() => ({
