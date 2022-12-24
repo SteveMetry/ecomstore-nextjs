@@ -8,12 +8,14 @@ interface ProductAmountProp {
   buttonLabel: string;
   prod: CartItem | Product;
   isCartItem?: boolean;
+  className?: string;
 }
 
 export const ProductAmount = ({
   buttonLabel,
   prod,
-  isCartItem
+  isCartItem,
+  className
 }: ProductAmountProp) => {
   const [amount, setAmount] = useState(
     isCartItem ? (prod as CartItem).amount : 1
@@ -34,7 +36,7 @@ export const ProductAmount = ({
   };
 
   return (
-    <form onSubmit={onBtnClick}>
+    <form onSubmit={onBtnClick} className={className}>
       <input
         type="number"
         className="

@@ -81,8 +81,7 @@ function isUsernameValid(usersList: User[], user: User) {
   return (
     /^[a-zA-Z ]{3,28}$/.test(user.username) &&
     !usersList.find(
-      (curUser) =>
-        curUser.id != user.id && curUser.username === user.username.trim()
+      (curUser) => curUser.id != user.id && curUser.username === user.username
     )
   );
 }

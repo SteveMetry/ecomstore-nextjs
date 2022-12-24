@@ -70,116 +70,97 @@ export default function ConsolePage() {
       navbarChildren={
         <h1 className="font-thin">Signed in as:{user?.username}</h1>
       }
-      className="bg-slate-100 min-h-screen"
+      className="bg-slate-100 min-h-screen flex"
     >
       {user && (
-        <div className="profile-container flex flex-col md:grid md:grid-cols-3 w-4/6 m-auto">
+        <div className="profile-container flex flex-col mt-40 md:grid md:grid-cols-3 w-4/6 m-auto items-center justify-center">
           <form
             onSubmit={handleSubmit}
-            className="usr-info-inputs grid gap-2 md:col-span-2"
+            className="usr-info-inputs grid gap-2 md:col-span-2
+            w-full
+            text-base
+            font-normal
+            text-gray-700
+            "
           >
             {
               <>
+                <h3 className="font-thin text2xl md:text-sm">Username:</h3>
                 <input
                   onChange={handleChange}
                   defaultValue={user.username}
                   name="username"
                   className="
-                    w-full
-                    text-base
-                    font-normal
-                    text-gray-700
                     bg-white
                     border border-solid border-gray-300
                     rounded"
                 />
+                <h3 className="font-thin text2xl md:text-sm">Password:</h3>
                 <input
                   onChange={handleChange}
                   defaultValue={user.password}
                   name="password"
                   className="
-                    w-full
-                    text-base
-                    font-normal
-                    text-gray-700
                     bg-white
                     border border-solid border-gray-300
                     rounded"
                 />
+                <h3 className="font-thin text2xl md:text-sm">Email:</h3>
                 <input
                   onChange={handleChange}
                   defaultValue={user.email}
                   name="email"
                   className="
-                    w-full
-                    text-base
-                    font-normal
-                    text-gray-700
                     bg-white
                     border border-solid border-gray-300
                     rounded"
                 />
+                <h3 className="font-thin text2xl md:text-sm">Phone:</h3>
                 <input
                   onChange={handleChange}
                   defaultValue={user.phone}
                   name="phone"
                   className="
-                    w-full
-                    text-base
-                    font-normal
-                    text-gray-700
                     bg-white
                     border border-solid border-gray-300
                     rounded"
                 />
+                <h3 className="font-thin text2xl md:text-sm">First Name:</h3>
                 <input
                   onChange={handleChange}
                   defaultValue={user.firstname}
                   name="firstname"
                   className="
-                    w-full
-                    text-base
-                    font-normal
-                    text-gray-700
                     bg-white
                     border border-solid border-gray-300
                     rounded"
                 />
+                <h3 className="font-thin text2xl md:text-sm">Last Name:</h3>
                 <input
                   onChange={handleChange}
                   defaultValue={user.lastname}
                   name="lastname"
                   className="
-                    w-full
-                    text-base
-                    font-normal
-                    text-gray-700
                     bg-white
                     border border-solid border-gray-300
                     rounded"
                 />
+                <h3 className="font-thin text2xl md:text-sm">Age:</h3>
                 <input
                   onChange={handleChange}
                   defaultValue={user.age}
                   name="age"
                   className="
-                    w-full
-                    text-base
-                    font-normal
-                    text-gray-700
                     bg-white
                     border border-solid border-gray-300
                     rounded"
                 />
+                <h3 className="font-thin text2xl md:text-sm">Gender:</h3>
                 <input
                   onChange={handleChange}
                   defaultValue={user.gender}
                   name="gender"
                   className="
-                    w-full
-                    text-base
-                    font-normal
-                    text-gray-700
                     bg-white
                     border border-solid border-gray-300
                     rounded"

@@ -8,6 +8,7 @@ import { ProductAmount } from ".components/ProductAmount";
 import { ProductSearch } from ".components/ProductSearch";
 import { Product } from ".entities/product.interface";
 import { useCartItemsStore } from ".hooks/cartItemsStore";
+import Link from "next/link";
 
 const customList = ["pets", "makeup"];
 
@@ -49,7 +50,7 @@ export default function Home() {
     const maxId = 100;
     const randomIds: number[] = [];
     const initialProdList: Product[] = [];
-    for (let i = 0; i < 12; i++) {
+    for (let i = 0; i < 13; i++) {
       let randomProdId =
         Math.floor(Math.random() * (maxId - minId + 1)) + minId;
       while (randomIds.find((id) => id === randomProdId)) {
@@ -115,10 +116,20 @@ export default function Home() {
                 <Image src={prod.thumbnail} alt={prod.title} fill />
               </div>
               <div className="flex justify-between items-center w-full">
-                <h4>{prod.title.toUpperCase()}</h4>
+                <Link
+                  href={`/products/${prod.id}`}
+                  className="hover:text-blue-400"
+                >
+                  {prod.title.toUpperCase()}
+                </Link>
                 <h4 className="text-gray-400">${prod.price}</h4>
               </div>
-              <p className="my-4 w-full">{prod.description}</p>
+              <Link
+                href={`/products/${prod.id}`}
+                className="my-4 w-full hover:text-blue-400"
+              >
+                {prod.description}
+              </Link>
             </div>
             <ProductAmount buttonLabel="Add to cart" prod={prod} />
           </div>
