@@ -1,7 +1,8 @@
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Layout } from ".components/Layout";
 import { User } from ".entities/user.interface";
 import { useUsersStore } from ".hooks/usersStore";
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+
 interface UserInput {
   id?: number;
   mode?: string;
@@ -16,6 +17,8 @@ interface UserInput {
   image?: string;
   cartItems?: [];
 }
+const inputSyling =
+  "w-11/12 px-4 py-2 text-xl md:text-sm font-normal text-gray-700 bg-white border border-solid border-gray-300 rounded m-0 focus:border-blue-600 focus:outline-none self-center";
 
 export default function SignUpPage() {
   const usr = useUsersStore((state) => state.user);
@@ -23,6 +26,7 @@ export default function SignUpPage() {
   const [user, setUser] = useState<User>();
   const usersList = useUsersStore((state) => state.usersList);
   const [allUsers, setAllUsers] = useState<User[]>([]);
+
   useEffect(() => {
     setAllUsers(usersList);
   }, [usersList]);
@@ -55,15 +59,28 @@ export default function SignUpPage() {
       : console.error("could not add user");
   };
   return (
-    <Layout navbarChildren={<h1 className="font-thin">Sign Up</h1>}>
+    <Layout
+      navbarChildren={
+        <h1
+          className="
+            font-thin
+            max-sm:text-4xl
+            md:text-3xl
+            text-white
+          "
+        >
+          Sign Up
+        </h1>
+      }
+    >
       <form
-        className="grid gap-5 grid-cols-1 m-auto w-96"
+        className="grid gap-5 grid-cols-1 m-auto w-96 mt-24 md:mt-12"
         onSubmit={handleSubmit}
       >
         <div className="flex flex-col">
           <input
             name="username"
-            className="w-full max-w-lg rounded-lg border border-slate-200 px-2 py-1 hover:border-blue-500 focus:outline-none focus:ring focus:ring-blue-500/40 active:ring active:ring-blue-500/40"
+            className={inputSyling}
             onChange={handleChange}
             placeholder="Username"
             value={userInputs.username || ""}
@@ -75,7 +92,7 @@ export default function SignUpPage() {
         <div className="flex flex-col">
           <input
             name="password"
-            className="w-full max-w-lg rounded-lg border border-slate-200 px-2 py-1 hover:border-blue-500 focus:outline-none focus:ring focus:ring-blue-500/40 active:ring active:ring-blue-500/40"
+            className={inputSyling}
             onChange={handleChange}
             placeholder="Password"
             type="password"
@@ -88,7 +105,7 @@ export default function SignUpPage() {
         <div className="flex flex-col">
           <input
             name="email"
-            className="w-full max-w-lg rounded-lg border border-slate-200 px-2 py-1 hover:border-blue-500 focus:outline-none focus:ring focus:ring-blue-500/40 active:ring active:ring-blue-500/40"
+            className={inputSyling}
             onChange={handleChange}
             placeholder="Email"
             value={userInputs.email || ""}
@@ -100,7 +117,7 @@ export default function SignUpPage() {
         <div className="flex flex-col">
           <input
             name="phone"
-            className="w-full max-w-lg rounded-lg border border-slate-200 px-2 py-1 hover:border-blue-500 focus:outline-none focus:ring focus:ring-blue-500/40 active:ring active:ring-blue-500/40"
+            className={inputSyling}
             onChange={handleChange}
             placeholder="phone"
             type="number"
@@ -113,7 +130,7 @@ export default function SignUpPage() {
         <div className="flex flex-col">
           <input
             name="firstname"
-            className="w-full max-w-lg rounded-lg border border-slate-200 px-2 py-1 hover:border-blue-500 focus:outline-none focus:ring focus:ring-blue-500/40 active:ring active:ring-blue-500/40"
+            className={inputSyling}
             onChange={handleChange}
             placeholder="First name"
             value={userInputs.firstname || ""}
@@ -125,7 +142,7 @@ export default function SignUpPage() {
         <div className="flex flex-col">
           <input
             name="lastname"
-            className="w-full max-w-lg rounded-lg border border-slate-200 px-2 py-1 hover:border-blue-500 focus:outline-none focus:ring focus:ring-blue-500/40 active:ring active:ring-blue-500/40"
+            className={inputSyling}
             onChange={handleChange}
             placeholder="Last name"
             value={userInputs.lastname || ""}
@@ -137,7 +154,7 @@ export default function SignUpPage() {
         <div className="flex flex-col">
           <input
             name="age"
-            className="w-full max-w-lg rounded-lg border border-slate-200 px-2 py-1 hover:border-blue-500 focus:outline-none focus:ring focus:ring-blue-500/40 active:ring active:ring-blue-500/40"
+            className={inputSyling}
             onChange={handleChange}
             placeholder="Age"
             type="number"
@@ -149,20 +166,33 @@ export default function SignUpPage() {
             Invalid age!
           </p>
         </div>
-        <select
-          name="gender"
-          className="w-full max-w-lg rounded-lg border border-slate-200 px-2 py-1 hover:border-blue-500 focus:outline-none focus:ring focus:ring-blue-500/40 active:ring active:ring-blue-500/40"
-          defaultValue={userInputs.gender || ""}
-        >
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-        </select>
+        <div className="flex flex-col">
+          <select
+            name="gender"
+            className={inputSyling}
+            defaultValue={userInputs.gender || ""}
+          >
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+
         <div className="text-center">
           <button
             type="submit"
-            className="border border-gray-700 bg-gray-700 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-gray-800 focus:outline-none focus:shadow-outline w-36"
+            className="px-4
+            py-1.5
+            bg-blue-400
+            text-white
+            font-bold
+            rounded
+            hover:bg-blue-500
+            focus:bg-blue-500
+            active:bg-blue-600
+            ml-4
+            my-2 w-36"
           >
-            Save Info
+            Create
           </button>
         </div>
       </form>

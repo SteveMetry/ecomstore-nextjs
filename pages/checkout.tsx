@@ -35,25 +35,29 @@ export default function CheckoutPage() {
           CHECKOUT
         </h1>
       }
-      className="flex flex-col-reverse md:flex-row md:m-8 bg-slate-100 min-h-screen"
+      className="bg-slate-100 min-h-screen"
     >
-      <div className="preview-cart-container bg-inherit rounded m-2 p-2">
-        {userCartItems.map((item, index) => (
-          <CartItemBlock
-            key={`cart-item-${index}`}
-            cartItem={item}
-            isRemovable={true}
-          ></CartItemBlock>
-        ))}
-      </div>
-      <div className="cart-info-container grid grid-cols-2 bg-white rounded md:w-1/2 p-6 m-6 mt-24 md:mt-2">
-        <h4>Tax:</h4>
-        <h4 className="text-right">${totalPrice / 10}</h4>
-        <h4>Total:</h4>
-        <h4 className="text-right">${totalPrice + totalPrice / 10}</h4>
-        <Link
-          href="/pay"
-          className="
+      <div className="flex flex-col-reverse md:flex-row mt-12">
+        <div className="rounded m-2 p-2">
+          {userCartItems.map((item, index) => (
+            <CartItemBlock
+              key={`cart-item-${index}`}
+              cartItem={item}
+              isRemovable={true}
+            ></CartItemBlock>
+          ))}
+        </div>
+        <div
+          className="grid grid-cols-2 bg-white rounded md:w-1/2 p-6 m-6 mt-24 md:mt-2 "
+          style={{ height: "20rem" }}
+        >
+          <h4>Tax:</h4>
+          <h4 className="text-right">${totalPrice / 10}</h4>
+          <h4>Total:</h4>
+          <h4 className="text-right">${totalPrice + totalPrice / 10}</h4>
+          <Link
+            href="/pay"
+            className="
             bg-blue-400
             rounded
             w-full
@@ -64,9 +68,10 @@ export default function CheckoutPage() {
             items-center
             text-white
           "
-        >
-          Pay Now
-        </Link>
+          >
+            Pay Now
+          </Link>
+        </div>
       </div>
     </Layout>
   );

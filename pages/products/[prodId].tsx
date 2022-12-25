@@ -1,39 +1,12 @@
+import Image from "next/image";
+
 import { Layout } from ".components/Layout";
 import { ProductAmount } from ".components/ProductAmount";
 import { Product } from ".entities/product.interface";
-import Image from "next/image";
 
 interface Path {
   params: {
     prodId: string;
-  };
-}
-
-export async function getStaticProps(paths: { params: { prodId: number } }) {
-  const result = await fetch(
-    `https://dummyjson.com/products/${paths.params.prodId}`
-  ).then((res) => res.json());
-
-  return {
-    props: result
-  };
-}
-
-export async function getStaticPaths() {
-  let pathList: Path[] = [];
-  const staticPaths = () => {
-    for (let i = 1; i <= 99; i++) {
-      pathList.push({
-        params: {
-          prodId: i.toString()
-        }
-      });
-    }
-    return pathList;
-  };
-  return {
-    paths: staticPaths(),
-    fallback: true // can also be true or 'blocking'
   };
 }
 
@@ -91,4 +64,32 @@ export default function Character(prod: Product) {
       </div>
     </Layout>
   );
+}
+
+export async function getStaticPaths() {
+  let pathList: Path[] = [];
+  const staticPaths = () => {
+    for (let i = 1; i <= 99; i++) {
+      pathList.push({
+        params: {
+          prodId: i.toString()
+        }
+      });
+    }
+    return pathList;
+  };
+  return {
+    paths: staticPaths(),
+    fallback: true // can also be true or 'blocking'
+  };
+}
+
+export async function getStaticProps(path: Path) {
+  const result = await fetch(
+    `https://dummyjson.com/products/${path.params.prodId}`
+  ).then((res) => res.json());
+
+  return {
+    props: result
+  };
 }

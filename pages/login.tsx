@@ -67,16 +67,13 @@ export default function LoginPage() {
       className="bg-slate-100 min-h-screen"
     >
       <form
-        className="flex flex-col w-4/12 h-4/6 my-5 mx-auto rounded p-2 bg-white"
+        className="flex flex-col md:w-4/12 md:h-4/6 m-auto mt-28 w-11/12 md:my-5 md:mx-auto rounded p-2 bg-white pb-6"
         onSubmit={handleSubmit}
       >
-        <h4 className="font-thin">Sign in:</h4>
+        <h4 className="font-thin text-xl md:text-normal m-2">Sign in:</h4>
         <input
           className="
-            bg-white
-            border border-solid border-gray-300
-            rounded
-            focus:bg-white focus:border-blue-600 focus:outline-none"
+          w-11/12 px-4 py-2 text-xl md:text-sm font-normal text-gray-700 bg-white border border-solid border-gray-300 rounded m-0 focus:border-blue-600 focus:outline-none self-center mb-6"
           placeholder="The Username.."
           name="username"
           value={userInputs.username || ""}
@@ -85,29 +82,54 @@ export default function LoginPage() {
         <input
           type="password"
           className="
-          bg-white
-          border border-solid border-gray-300
-          rounded
-          focus:bg-white focus:border-blue-600 focus:outline-none"
+          w-11/12 px-4 py-2 text-xl md:text-sm font-normal text-gray-700 bg-white border border-solid border-gray-300 rounded m-0 focus:border-blue-600 focus:outline-none self-center"
           placeholder="Password Please.."
           name="password"
           value={userInputs.password || ""}
           onChange={handleChange}
         />
         {!isLoginValid && (
-          <span className="text-red-400 text-xs">
+          <span className="text-red-400 text-xs self-center">
             Invalid, Please Try Again
           </span>
         )}
-        <small className="text-gray-600">
+        <small className="text-gray-600 self-center my-2">
           We never share your information with anyone else.
         </small>
-        <button type="submit">Login</button>
+        <button
+          type="submit"
+          className="
+            w-11/12
+            px-4
+            py-1.5
+            bg-blue-400
+            text-white
+            font-bold
+            rounded
+            hover:bg-blue-500
+            focus:bg-blue-500
+            active:bg-blue-600
+            ml-4
+            my-2
+          "
+        >
+          Login
+        </button>
         <Link
           href="/onboarding"
           className="
-            px-6 py-2 leading-tight
-            w-full text-center
+          w-11/12
+          px-4
+          py-1.5
+          bg-blue-400
+          text-white
+          font-bold
+          rounded
+          hover:bg-blue-500
+          focus:bg-blue-500
+          active:bg-blue-600
+          ml-4
+          text-center
           "
         >
           Create Account

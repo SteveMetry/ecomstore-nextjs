@@ -20,7 +20,7 @@ const defaultUserList: User[] = [
     mode: "Customer",
     username: "steve",
     password: "metrrry",
-    phone: 3,
+    phone: 211808620,
     email: "steven.metry22@ggmak.com",
     firstname: "john",
     lastname: "smith",
@@ -48,9 +48,9 @@ const defaultUserList: User[] = [
     mode: "admin",
     username: "e",
     password: "e",
-    phone: 94721489,
+    phone: 94721487,
     email: "Admin@tech.com",
-    firstname: "e",
+    firstname: "eds",
     lastname: "yusif",
     age: 18,
     gender: "Man",
@@ -146,7 +146,6 @@ export const useUsersStore = create<UserState>()(
         user: updatedUser,
         usersList: updateUserList(state.usersList, updatedUser)
       }));
-      console.log(get().usersList);
     },
     userExist: (chosenUser) => {
       return !!get().usersList.find((item) => item.id === chosenUser.id);
@@ -155,8 +154,7 @@ export const useUsersStore = create<UserState>()(
       set(() => ({
         user: chosenUser
       }));
-      console.log(get().user);
-      // window.location.replace(`${redirect ? `/${redirect}` : "/settings"}`);
+      window.location.replace(`${redirect ? `/${redirect}` : "/settings"}`);
       return true;
     },
     isUserDataValid: (chosenUser) => {

@@ -12,6 +12,21 @@ import Link from "next/link";
 
 const customList = ["pets", "makeup"];
 
+function prodDesciption(description: string) {
+  description = description
+    .replaceAll("-", " ") // unneccasary '-'s
+    .replaceAll(";", " ") // unneccasary ';'s
+    .replaceAll("&", " ") // unneccasary '&'s
+    .replaceAll(",", " ") // unneccasary ','s
+    .replace(/\s+/g, " ") // remove double spaces
+    .toLowerCase()
+    .trim(); // trailing spaces
+  const shortText =
+    description.length > 130
+      ? `${description.substring(0, 130)}...` // too many characters
+      : description;
+  return shortText;
+}
 export default function Home() {
   const [displayAmount, setDisplayAmount] = useState(false);
   const [categoryList, setCategoryList] = useState<string[]>([]);
@@ -77,7 +92,7 @@ export default function Home() {
           setProducts={setProducts}
         />
       }
-      className="bg-slate-100 min-h-screen"
+      className="min-h-screen"
     >
       <div className="flex justify-center items-center">
         <button onClick={() => setDisplayCategories(!displayCategories)}>
@@ -108,7 +123,7 @@ export default function Home() {
         {products.map((prod) => (
           <div
             key={prod.id}
-            className="shadow-md rounded-xl flex flex-col justify-between items-center p-4 bg-white"
+            className="shadow-xl rounded-xl flex flex-col justify-between items-center p-4 bg-white"
           >
             <div className="flex flex-col items-center w-full">
               <h4>{prod.brand}</h4>
@@ -126,9 +141,9 @@ export default function Home() {
               </div>
               <Link
                 href={`/products/${prod.id}`}
-                className="my-4 w-full hover:text-blue-400"
+                className="my-4 w-full hover:text-blue-400 hover:underline"
               >
-                {prod.description}
+                {prodDesciption(prod.description)}
               </Link>
             </div>
             <ProductAmount buttonLabel="Add to cart" prod={prod} />
