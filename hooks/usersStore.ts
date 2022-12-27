@@ -107,21 +107,6 @@ const updateUserList = (usersList: User[], usr: User) => {
   return usersList;
 };
 
-const defaultUser = {
-  id: 10,
-  mode: "customer",
-  username: "",
-  password: "",
-  phone: 0,
-  email: "",
-  firstname: "",
-  lastname: "",
-  age: 0,
-  gender: "Man",
-  image: "/img/half_person_icon.png",
-  cartItems: []
-};
-
 export const useUsersStore = create<UserState>()(
   persist((set, get) => ({
     user: undefined,

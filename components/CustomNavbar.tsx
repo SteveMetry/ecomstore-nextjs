@@ -6,7 +6,7 @@ import { PowerIcon, UserCircleIcon } from "@heroicons/react/24/outline";
 import SiteLogo from ".img/logo.png";
 
 export const CustomNavbar = ({ children }: PropsWithChildren<object>) => (
-  <nav className="flex flex-col p-4 bg-neutral-500 fixed w-full z-10">
+  <nav className="flex flex-col p-4 bg-black/[0.85] fixed w-full z-10">
     <div className="flex items-center justify-between">
       <Link href="/">
         <Image src={SiteLogo} alt="Site Logo" height={44} />

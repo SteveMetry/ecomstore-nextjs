@@ -13,11 +13,11 @@ export interface User {
   cartItems: [];
   address?: {
     line1: string;
-    line2: string;
+    line2?: string;
     suburb: string;
     city: string;
     postcode: string;
-    message: string;
+    message?: string;
   };
   receipts?: [];
   reviews?: [];

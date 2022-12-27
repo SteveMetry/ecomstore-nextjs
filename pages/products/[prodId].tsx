@@ -1,12 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { useEffect, useState } from "react";
+import {
+  MagnifyingGlassIcon,
+  ShoppingCartIcon
+} from "@heroicons/react/24/outline";
 
 import { Layout } from ".components/Layout";
 import { ProductAmount } from ".components/ProductAmount";
 import { Product } from ".entities/product.interface";
 import { getProducts } from ".hooks/getProducts";
+import { CartItemContainer } from ".components/CartItemContainer";
+import { useCartItemsStore } from ".hooks/cartItemsStore";
 
 interface Path {
   params: {
@@ -16,6 +21,20 @@ interface Path {
 
 export default function ProductPage(prod: Product) {
   const [searchInput, setSearchInput] = useState("");
+  const [displayCartItems, setDisplayCartItems] = useCartItemsStore((state) => [
+    state.displayCartItems,
+    state.setDisplayCartItems
+  ]);
+  const cartItems = useCartItemsStore((state) => state.cartItems);
+  const [displayAmount, setDisplayAmount] = useState(false);
+  const onCartBtnClick = () => {
+    document.body.classList.add("overflow-y-hidden");
+    setDisplayCartItems(true);
+  };
+
+  useEffect(() => {
+    setDisplayAmount(true);
+  }, [setDisplayCartItems]);
 
   return (
     <Layout
@@ -38,6 +57,16 @@ export default function ProductPage(prod: Product) {
           >
             <MagnifyingGlassIcon className="w-4" />
           </Link>
+          <button className="flex" onClick={onCartBtnClick}>
+            <ShoppingCartIcon className="h-full text-white w-10" />
+            <span className="bg-white px-2 rounded-full relative right-4">
+              {displayAmount
+                ? cartItems
+                    .map((item) => item.amount)
+                    .reduce((a, b) => a + b, 0)
+                : 0}
+            </span>
+          </button>
         </div>
       }
       className="min-h-screen"
@@ -78,6 +107,7 @@ export default function ProductPage(prod: Product) {
           {prod.description}
         </h4>
       </div>
+      {displayCartItems && <CartItemContainer />}
     </Layout>
   );
 }

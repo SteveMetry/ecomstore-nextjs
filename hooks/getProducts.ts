@@ -21,3 +21,11 @@ export async function getSearchedProducts(searchInput: string) {
     product.title.toLowerCase().includes(searchInput.trim().toLowerCase())
   );
 }
+const customList = ["pets", "makeup"];
+export async function getCategories() {
+  fetch(`https://dummyjson.com/products/categories`)
+    .then((response) => response.json())
+    .then((categories) => {
+      return [...categories, ...customList];
+    });
+}

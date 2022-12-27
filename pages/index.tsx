@@ -72,7 +72,7 @@ export default function Home() {
       const maxId = 100;
       const randomIds: number[] = [];
       const initialProdList: Product[] = [];
-      for (let i = 0; i < 13; i++) {
+      for (let i = 0; i < 21; i++) {
         let randomProdId =
           Math.floor(Math.random() * (maxId - minId + 1)) + minId;
         while (randomIds.find((id) => id === randomProdId)) {
@@ -138,7 +138,15 @@ export default function Home() {
           >
             <div className="flex flex-col items-center w-full">
               <h4>{prod.brand}</h4>
-              <div className="relative h-32 w-32 my-4">
+              <div
+                className="relative my-4"
+                style={{
+                  aspectRatio: "3/2",
+                  height: "8rem",
+                  maxWidth: "9rem",
+                  margin: "auto"
+                }}
+              >
                 <Image src={prod.thumbnail} alt={prod.title} fill />
               </div>
               <div className="flex justify-between items-center w-full">
