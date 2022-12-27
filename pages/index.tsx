@@ -14,10 +14,10 @@ const customList = ["pets", "makeup"];
 
 function prodDesciption(description: string) {
   description = description
-    .replaceAll("-", " ") // unneccasary '-'s
-    .replaceAll(";", " ") // unneccasary ';'s
-    .replaceAll("&", " ") // unneccasary '&'s
-    .replaceAll(",", " ") // unneccasary ','s
+    .replaceAll("-", " ") // unneccessary '-'s
+    .replaceAll(";", " ") // unneccessary ';'s
+    .replaceAll("&", " ") // unneccessary '&'s
+    .replaceAll(",", " ") // unneccessary ','s
     .replace(/\s+/g, " ") // remove double spaces
     .toLowerCase()
     .trim(); // trailing spaces
@@ -27,6 +27,7 @@ function prodDesciption(description: string) {
       : description;
   return shortText;
 }
+
 export default function Home() {
   const [displayAmount, setDisplayAmount] = useState(false);
   const [categoryList, setCategoryList] = useState<string[]>([]);

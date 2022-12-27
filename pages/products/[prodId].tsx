@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Layout } from ".components/Layout";
 import { ProductAmount } from ".components/ProductAmount";
 import { Product } from ".entities/product.interface";
+import { getProducts } from ".hooks/getProducts";
 
 interface Path {
   params: {
@@ -10,20 +11,10 @@ interface Path {
   };
 }
 
-export default function Character(prod: Product) {
+export default function ProductPage(prod: Product) {
   return (
     <Layout
-      navbarChildren={
-        <h2
-          className="
-            font-thin
-            max-sm:text-4xl
-            md:text-3xl
-            text-white"
-        >
-          Search Bar Here
-        </h2>
-      }
+      navbarChildren={<h1>hi</h1>}
       className="min-h-screen flex flex-cols"
     >
       <div className="flex flex-col w-full mt-24">
@@ -84,11 +75,11 @@ export async function getStaticPaths() {
   };
 }
 
-export async function getStaticProps(path: Path) {
-  const result = await fetch(
-    `https://dummyjson.com/products/${path.params.prodId}`
-  ).then((res) => res.json());
-
+export async function getStaticProps(paths: Path) {
+  const prods = await getProducts();
+  const result = prods.products.find(
+    (item: Product) => item.id === parseInt(paths.params.prodId)
+  );
   return {
     props: result
   };

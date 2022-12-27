@@ -6,6 +6,7 @@ import {
 
 import { Product } from ".entities/product.interface";
 import { useCartItemsStore } from ".hooks/cartItemsStore";
+import { getProducts } from ".hooks/getProducts";
 
 interface ProductSearchProp {
   displayAmount: boolean;
@@ -16,47 +17,19 @@ export const ProductSearch = ({
   displayAmount,
   setProducts
 }: ProductSearchProp) => {
-  const categories = [
-    {
-      key: "dummyJSON",
-      desc: "Dummy Products"
-    },
-    {
-      key: "pets",
-      desc: "Pets"
-    },
-    {
-      key: "makeup",
-      desc: "Makeup"
-    }
-  ];
-  const [searchCategory, setSearchCategory] = useState("dummyJSON");
   const [searchInput, setSearchInput] = useState("");
   const [cartItems, setDisplayCartItems] = useCartItemsStore((state) => [
     state.cartItems,
     state.setDisplayCartItems
   ]);
 
-  const searchTyped = () => {
-    if (searchCategory === "dummyJSON") {
-      fetch(`https://dummyjson.com/products/search?q=${searchInput}`)
-        .then((response) => response.json())
-        .then((searchResults) => {
-          setProducts(searchResults?.products || []);
-        });
-    } else {
-      fetch(`/data/${searchCategory}.json`)
-        .then((response) => response.json())
-        .then((results) => {
-          let searchResults = ((results?.products || []) as Product[]).filter(
-            (product) =>
-              product.title
-                .toLowerCase()
-                .includes(searchInput.toLowerCase().trim())
-          );
-          setProducts(searchResults);
-        });
-    }
+  const searchTyped = async () => {
+    const prods = await getProducts();
+    let searchResults = ((prods.products || []) as Product[]).filter(
+      (product) =>
+        product.title.toLowerCase().includes(searchInput.toLowerCase().trim())
+    );
+    setProducts(searchResults);
   };
 
   const onCartBtnClick = () => {
@@ -67,19 +40,9 @@ export const ProductSearch = ({
   return (
     <>
       <div className="flex items-stretch max-w-lg mr-6">
-        <select
-          className="px-2 rounded-l-lg focus:outline-none"
-          onChange={(event) => setSearchCategory(event.target.value)}
-        >
-          {categories.map((category, index) => (
-            <option key={`Cat-${index}:${category.key}`} value={category.key}>
-              {category.desc}
-            </option>
-          ))}
-        </select>
         <input
           type="search"
-          className="flex-auto min-w-0 w-full px-3 py-1.5 text-gray-700 bg-white transition ease-in-out focus:text-gray-700 focus:bg-white focus:outline-none"
+          className="flex-auto min-w-0 w-full px-3 py-1.5 rounded-l-lg text-gray-700 bg-white transition ease-in-out focus:text-gray-700 focus:bg-white focus:outline-none"
           placeholder="Search Products"
           value={searchInput}
           onChange={(event) => setSearchInput(event.target.value)}
