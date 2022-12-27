@@ -1,4 +1,7 @@
 import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 import { Layout } from ".components/Layout";
 import { ProductAmount } from ".components/ProductAmount";
@@ -12,10 +15,32 @@ interface Path {
 }
 
 export default function ProductPage(prod: Product) {
+  const [searchInput, setSearchInput] = useState("");
+
   return (
     <Layout
-      navbarChildren={<h1>hi</h1>}
-      className="min-h-screen flex flex-cols"
+      navbarChildren={
+        <div className="flex items-stretch max-w-lg mr-6">
+          <input
+            type="search"
+            className="flex-auto min-w-0 w-full px-3 py-1.5 rounded-l-lg text-gray-700 bg-white transition ease-in-out focus:text-gray-700 focus:bg-white focus:outline-none"
+            placeholder="Search Products"
+            value={searchInput}
+            onChange={(event) => setSearchInput(event.target.value)}
+          />
+          <Link
+            className={`btn px-4 py-2 border border-solid rounded-r-lg focus:outline-none focus:ring-0 ${
+              searchInput.trim().length < 3
+                ? "border-gray-500 bg-gray-500 cursor-not-allowed text-white pointer-events-none"
+                : "bg-white hover:bg-gray-200 pointer-events-auto"
+            }`}
+            href={`/?search=${searchInput}`}
+          >
+            <MagnifyingGlassIcon className="w-4" />
+          </Link>
+        </div>
+      }
+      className="min-h-screen"
     >
       <div className="flex flex-col w-full mt-24">
         <h1 className="text-center text-gray-900 text-4xl font-light mb-4">

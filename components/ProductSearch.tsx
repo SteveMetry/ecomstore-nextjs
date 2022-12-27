@@ -1,36 +1,25 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 import {
   MagnifyingGlassIcon,
   ShoppingCartIcon
 } from "@heroicons/react/24/outline";
 
-import { Product } from ".entities/product.interface";
 import { useCartItemsStore } from ".hooks/cartItemsStore";
-import { getProducts } from ".hooks/getProducts";
 
 interface ProductSearchProp {
   displayAmount: boolean;
-  setProducts: Dispatch<SetStateAction<Product[]>>;
+  searchTyped: (searchInput: string) => Promise<void>;
 }
 
 export const ProductSearch = ({
   displayAmount,
-  setProducts
+  searchTyped
 }: ProductSearchProp) => {
   const [searchInput, setSearchInput] = useState("");
   const [cartItems, setDisplayCartItems] = useCartItemsStore((state) => [
     state.cartItems,
     state.setDisplayCartItems
   ]);
-
-  const searchTyped = async () => {
-    const prods = await getProducts();
-    let searchResults = ((prods.products || []) as Product[]).filter(
-      (product) =>
-        product.title.toLowerCase().includes(searchInput.toLowerCase().trim())
-    );
-    setProducts(searchResults);
-  };
 
   const onCartBtnClick = () => {
     document.body.classList.add("overflow-y-hidden");
@@ -53,7 +42,7 @@ export const ProductSearch = ({
               ? "border-gray-500 bg-gray-500 cursor-not-allowed text-white"
               : "bg-white hover:bg-gray-200"
           }`}
-          onClick={searchTyped}
+          onClick={() => searchTyped(searchInput)}
           disabled={searchInput.trim().length < 3}
         >
           <MagnifyingGlassIcon className="w-4" />

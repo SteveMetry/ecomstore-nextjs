@@ -1,4 +1,6 @@
 import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 
@@ -8,19 +10,16 @@ import { ProductAmount } from ".components/ProductAmount";
 import { ProductSearch } from ".components/ProductSearch";
 import { Product } from ".entities/product.interface";
 import { useCartItemsStore } from ".hooks/cartItemsStore";
-import Link from "next/link";
+import { getSearchedProducts } from ".hooks/getProducts";
 
 const customList = ["pets", "makeup"];
 
 function prodDesciption(description: string) {
   description = description
-    .replaceAll("-", " ") // unneccessary '-'s
-    .replaceAll(";", " ") // unneccessary ';'s
-    .replaceAll("&", " ") // unneccessary '&'s
-    .replaceAll(",", " ") // unneccessary ','s
-    .replace(/\s+/g, " ") // remove double spaces
-    .toLowerCase()
-    .trim(); // trailing spaces
+    .trim() // trailing spaces
+    .replace(/[-;&,]/g, " ") // replace unneccessary characters with single space
+    .replace(/\s+/g, " ") // replace double spaces with single space
+    .toLowerCase();
   const shortText =
     description.length > 130
       ? `${description.substring(0, 130)}...` // too many characters
@@ -38,6 +37,7 @@ export default function Home() {
     state.displayCartItems,
     state.setDisplayCartItems
   ]);
+  const router = useRouter();
 
   const onCategoryClick = (category: string) => {
     setChosenCategory(category);
@@ -52,6 +52,11 @@ export default function Home() {
       });
   };
 
+  const searchTyped = async (searchInput: string) => {
+    const searchResults = await getSearchedProducts(searchInput);
+    setProducts(searchResults);
+  };
+
   useEffect(() => {
     // before refresh page, close cart item container popup
     window.onbeforeunload = () => setDisplayCartItems(false);
@@ -61,36 +66,41 @@ export default function Home() {
         const initialCatList = [...categories, ...customList];
         setCategoryList(initialCatList);
       });
-    // hardcode minId and maxId to reduce amount of requests being called
-    const minId = 1;
-    const maxId = 100;
-    const randomIds: number[] = [];
-    const initialProdList: Product[] = [];
-    for (let i = 0; i < 13; i++) {
-      let randomProdId =
-        Math.floor(Math.random() * (maxId - minId + 1)) + minId;
-      while (randomIds.find((id) => id === randomProdId)) {
-        randomProdId = Math.floor(Math.random() * (maxId - minId + 1)) + minId;
+    if (router.query.search == null) {
+      // hardcode minId and maxId to reduce amount of requests being called
+      const minId = 1;
+      const maxId = 100;
+      const randomIds: number[] = [];
+      const initialProdList: Product[] = [];
+      for (let i = 0; i < 13; i++) {
+        let randomProdId =
+          Math.floor(Math.random() * (maxId - minId + 1)) + minId;
+        while (randomIds.find((id) => id === randomProdId)) {
+          randomProdId =
+            Math.floor(Math.random() * (maxId - minId + 1)) + minId;
+        }
+        randomIds.push(randomProdId);
       }
-      randomIds.push(randomProdId);
+      randomIds.forEach((id) => {
+        fetch(`https://dummyjson.com/products/${id}`)
+          .then((response) => response.json())
+          .then((prod: Product) => {
+            initialProdList.push(prod);
+          });
+      });
+      setProducts(initialProdList);
+    } else {
+      searchTyped(router.query.search as string);
     }
-    randomIds.forEach((id) => {
-      fetch(`https://dummyjson.com/products/${id}`)
-        .then((response) => response.json())
-        .then((prod: Product) => {
-          initialProdList.push(prod);
-        });
-    });
-    setProducts(initialProdList);
     setDisplayAmount(true);
-  }, [setDisplayCartItems]);
+  }, [router.query.search, setDisplayCartItems]);
 
   return (
     <Layout
       navbarChildren={
         <ProductSearch
           displayAmount={displayAmount}
-          setProducts={setProducts}
+          searchTyped={searchTyped}
         />
       }
       className="min-h-screen"
@@ -140,12 +150,7 @@ export default function Home() {
                 </Link>
                 <h4 className="text-gray-400">${prod.price}</h4>
               </div>
-              <Link
-                href={`/products/${prod.id}`}
-                className="my-4 w-full hover:text-blue-400 hover:underline"
-              >
-                {prodDesciption(prod.description)}
-              </Link>
+              <p className="my-4 w-full">{prodDesciption(prod.description)}</p>
             </div>
             <ProductAmount buttonLabel="Add to cart" prod={prod} />
           </div>
