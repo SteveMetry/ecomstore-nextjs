@@ -2,6 +2,7 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Layout } from ".components/Layout";
 import { User } from ".entities/user.interface";
 import { useUsersStore } from ".hooks/usersStore";
+import Head from "next/head";
 
 interface UserInput {
   id?: number;
@@ -59,128 +60,151 @@ export default function SignUpPage() {
       : console.error("could not add user");
   };
   return (
-    <Layout
-      navbarChildren={
-        <h1
-          className="
+    <>
+      <Head key="Create account - Sendnet">
+        <title>Create Account Now - SENDNET SHOP</title>
+        <meta
+          name="description"
+          content="Create your SENDNET ACCOUNT NOW, Manage purchases, create reviews, view personal information and more, Create for free Today"
+        ></meta>
+        <meta
+          name="title"
+          content="Create SENDNET Account - SENDNET SHOP"
+        ></meta>
+        <meta
+          name="keywords"
+          content="create my sendnet User, create my sendnet account, Free SENDNET Account, Create your account today, Create sendnet, Sendnet, shop sendnet, sendnet store"
+        ></meta>
+        <meta name="robots" content="index, follow"></meta>
+        <meta
+          http-equiv="Content-Type"
+          content="text/html; charset=utf-8"
+        ></meta>
+        <meta name="language" content="English"></meta>
+        <meta name="revisit-after" content="1 days"></meta>
+      </Head>
+      <Layout
+        navbarChildren={
+          <h1
+            className="
             font-thin
             max-sm:text-4xl
             md:text-3xl
             text-white
           "
-        >
-          Sign Up
-        </h1>
-      }
-    >
-      <form
-        className="grid gap-5 grid-cols-1 m-auto w-96 mt-24 md:mt-12"
-        onSubmit={handleSubmit}
-      >
-        <div className="flex flex-col">
-          <input
-            name="username"
-            className={inputSyling}
-            onChange={handleChange}
-            placeholder="Username"
-            value={userInputs.username || ""}
-          />
-          <p id="usernameError" className="text-red-600 hidden">
-            Invalid username!
-          </p>
-        </div>
-        <div className="flex flex-col">
-          <input
-            name="password"
-            className={inputSyling}
-            onChange={handleChange}
-            placeholder="Password"
-            type="password"
-            value={userInputs.password || ""}
-          />
-          <p id="passwordError" className="text-red-600 hidden">
-            Password too weak!
-          </p>
-        </div>
-        <div className="flex flex-col">
-          <input
-            name="email"
-            className={inputSyling}
-            onChange={handleChange}
-            placeholder="Email"
-            value={userInputs.email || ""}
-          />
-          <p id="emailError" className="text-red-600 hidden">
-            Invalid email!
-          </p>
-        </div>
-        <div className="flex flex-col">
-          <input
-            name="phone"
-            className={inputSyling}
-            onChange={handleChange}
-            placeholder="phone"
-            type="number"
-            value={userInputs.phone || ""}
-          />
-          <p id="phoneError" className="text-red-600 hidden">
-            Please enter a number!
-          </p>
-        </div>
-        <div className="flex flex-col">
-          <input
-            name="firstname"
-            className={inputSyling}
-            onChange={handleChange}
-            placeholder="First name"
-            value={userInputs.firstname || ""}
-          />
-          <p id="firstnameError" className="text-red-600 hidden">
-            Invalid first name!
-          </p>
-        </div>
-        <div className="flex flex-col">
-          <input
-            name="lastname"
-            className={inputSyling}
-            onChange={handleChange}
-            placeholder="Last name"
-            value={userInputs.lastname || ""}
-          />
-          <p id="lastnameError" className="text-red-600 hidden">
-            Invalid last name!
-          </p>
-        </div>
-        <div className="flex flex-col">
-          <input
-            name="age"
-            className={inputSyling}
-            onChange={handleChange}
-            placeholder="Age"
-            type="number"
-            min="18"
-            max="100"
-            value={userInputs.age || ""}
-          />
-          <p id="ageError" className="text-red-600 hidden">
-            Invalid age!
-          </p>
-        </div>
-        <div className="flex flex-col">
-          <select
-            name="gender"
-            className={inputSyling}
-            defaultValue={userInputs.gender || ""}
           >
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-          </select>
-        </div>
+            Sign Up
+          </h1>
+        }
+      >
+        <form
+          className="grid gap-5 grid-cols-1 m-auto w-96 mt-24 md:mt-12"
+          onSubmit={handleSubmit}
+        >
+          <div className="flex flex-col">
+            <input
+              name="username"
+              className={inputSyling}
+              onChange={handleChange}
+              placeholder="Username"
+              value={userInputs.username || ""}
+            />
+            <p id="usernameError" className="text-red-600 hidden">
+              Invalid username!
+            </p>
+          </div>
+          <div className="flex flex-col">
+            <input
+              name="password"
+              className={inputSyling}
+              onChange={handleChange}
+              placeholder="Password"
+              type="password"
+              value={userInputs.password || ""}
+            />
+            <p id="passwordError" className="text-red-600 hidden">
+              Password too weak!
+            </p>
+          </div>
+          <div className="flex flex-col">
+            <input
+              name="email"
+              className={inputSyling}
+              onChange={handleChange}
+              placeholder="Email"
+              value={userInputs.email || ""}
+            />
+            <p id="emailError" className="text-red-600 hidden">
+              Invalid email!
+            </p>
+          </div>
+          <div className="flex flex-col">
+            <input
+              name="phone"
+              className={inputSyling}
+              onChange={handleChange}
+              placeholder="phone"
+              type="number"
+              value={userInputs.phone || ""}
+            />
+            <p id="phoneError" className="text-red-600 hidden">
+              Please enter a number!
+            </p>
+          </div>
+          <div className="flex flex-col">
+            <input
+              name="firstname"
+              className={inputSyling}
+              onChange={handleChange}
+              placeholder="First name"
+              value={userInputs.firstname || ""}
+            />
+            <p id="firstnameError" className="text-red-600 hidden">
+              Invalid first name!
+            </p>
+          </div>
+          <div className="flex flex-col">
+            <input
+              name="lastname"
+              className={inputSyling}
+              onChange={handleChange}
+              placeholder="Last name"
+              value={userInputs.lastname || ""}
+            />
+            <p id="lastnameError" className="text-red-600 hidden">
+              Invalid last name!
+            </p>
+          </div>
+          <div className="flex flex-col">
+            <input
+              name="age"
+              className={inputSyling}
+              onChange={handleChange}
+              placeholder="Age"
+              type="number"
+              min="18"
+              max="100"
+              value={userInputs.age || ""}
+            />
+            <p id="ageError" className="text-red-600 hidden">
+              Invalid age!
+            </p>
+          </div>
+          <div className="flex flex-col">
+            <select
+              name="gender"
+              className={inputSyling}
+              defaultValue={userInputs.gender || ""}
+            >
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+          </div>
 
-        <div className="text-center">
-          <button
-            type="submit"
-            className="px-4
+          <div className="text-center">
+            <button
+              type="submit"
+              className="px-4
             py-1.5
             bg-blue-400
             text-white
@@ -191,11 +215,12 @@ export default function SignUpPage() {
             active:bg-blue-600
             ml-4
             my-2 w-36"
-          >
-            Create
-          </button>
-        </div>
-      </form>
-    </Layout>
+            >
+              Create
+            </button>
+          </div>
+        </form>
+      </Layout>
+    </>
   );
 }

@@ -11,6 +11,7 @@ import { ProductSearch } from ".components/ProductSearch";
 import { Product } from ".entities/product.interface";
 import { useCartItemsStore } from ".hooks/cartItemsStore";
 import { getSearchedProducts } from ".hooks/getProducts";
+import Head from "next/head";
 
 const customList = ["pets", "makeup"];
 
@@ -96,75 +97,98 @@ export default function Home() {
   }, [router.query.search, setDisplayCartItems]);
 
   return (
-    <Layout
-      navbarChildren={
-        <ProductSearch
-          displayAmount={displayAmount}
-          searchTyped={searchTyped}
-        />
-      }
-      className="min-h-screen"
-    >
-      <div className="flex justify-center items-center">
-        <button onClick={() => setDisplayCategories(!displayCategories)}>
-          {displayCategories ? (
-            <MinusIcon className="w-4" />
-          ) : (
-            <PlusIcon className="w-4" />
-          )}
-        </button>
-        <h1 className="ml-4">Categories: {chosenCategory.toUpperCase()}</h1>
-      </div>
-      <div
-        className={`${
-          displayCategories ? "grid" : "hidden"
-        } grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-2 gap-y-4 p-4 md:p-6 text-xs`}
+    <>
+      <Head key="Sendnet's Shop Homepage">
+        <title>SHOP NOW - SENDNET</title>
+        <meta
+          name="description"
+          content="Shop Sendnet Online, Find the right Products for you Today, View Online Now!"
+        ></meta>
+        <meta name="title" content="SENDNET SHOP"></meta>
+        <meta
+          name="keywords"
+          content="Shop Sendnet Online, Shop Sendnet, Sendnet.co, Sendnet Store, Sendnet Online Store, Find Sendnet Online"
+        ></meta>
+        <meta name="robots" content="index, follow"></meta>
+        <meta
+          http-equiv="Content-Type"
+          content="text/html; charset=utf-8"
+        ></meta>
+        <meta name="language" content="English"></meta>
+        <meta name="revisit-after" content="1 days"></meta>
+      </Head>
+      <Layout
+        navbarChildren={
+          <ProductSearch
+            displayAmount={displayAmount}
+            searchTyped={searchTyped}
+          />
+        }
+        className="min-h-screen"
       >
-        {categoryList.map((category, index) => (
-          <button
-            key={`Category ${index + 1}`}
-            className="text-gray-700 uppercase bg-slate-50 rounded-full shadow-md hover:bg-gray-300 hover:shadow-lg focus:bg-gray-300 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-400 active:shadow-lg p-2"
-            onClick={() => onCategoryClick(category)}
-          >
-            {category}
+        <div className="flex justify-center items-center">
+          <button onClick={() => setDisplayCategories(!displayCategories)}>
+            {displayCategories ? (
+              <MinusIcon className="w-4" />
+            ) : (
+              <PlusIcon className="w-4" />
+            )}
           </button>
-        ))}
-      </div>
-      <div className="grid grid-cols-2 lg:grid-cols-3 gap-8 p-4 md:p-6">
-        {products.map((prod) => (
-          <div
-            key={prod.id}
-            className="shadow-xl rounded-xl flex flex-col justify-between items-center p-4 bg-white"
-          >
-            <div className="flex flex-col items-center w-full">
-              <h4>{prod.brand}</h4>
-              <div
-                className="relative my-4"
-                style={{
-                  aspectRatio: "3/2",
-                  height: "8rem",
-                  maxWidth: "9rem",
-                  margin: "auto"
-                }}
-              >
-                <Image src={prod.thumbnail} alt={prod.title} fill />
-              </div>
-              <div className="flex justify-between items-center w-full">
-                <Link
-                  href={`/products/${prod.id}`}
-                  className="hover:text-blue-400"
+          <h1 className="ml-4">Categories: {chosenCategory.toUpperCase()}</h1>
+        </div>
+        <div
+          className={`${
+            displayCategories ? "grid" : "hidden"
+          } grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-2 gap-y-4 p-4 md:p-6 text-xs`}
+        >
+          {categoryList.map((category, index) => (
+            <button
+              key={`Category ${index + 1}`}
+              className="text-gray-700 uppercase bg-slate-50 rounded-full shadow-md hover:bg-gray-300 hover:shadow-lg focus:bg-gray-300 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-400 active:shadow-lg p-2"
+              onClick={() => onCategoryClick(category)}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-8 p-4 md:p-6">
+          {products.map((prod) => (
+            <div
+              key={prod.id}
+              className="shadow-xl rounded-xl flex flex-col justify-between items-center p-4 bg-white"
+            >
+              <div className="flex flex-col items-center w-full">
+                <h4>{prod.brand}</h4>
+                <div
+                  className="relative my-4"
+                  style={{
+                    aspectRatio: "3/2",
+                    height: "8rem",
+                    maxWidth: "9rem",
+                    margin: "auto"
+                  }}
                 >
-                  {prod.title.toUpperCase()}
-                </Link>
-                <h4 className="text-gray-400">${prod.price}</h4>
+                  <Image src={prod.thumbnail} alt={prod.title} fill />
+                </div>
+                <div className="flex justify-between items-center w-full">
+                  <Link
+                    href={`/products/${prod.id}`}
+                    className="hover:text-blue-400"
+                  >
+                    {prod.title.toUpperCase()}
+                  </Link>
+                  <h4 className="text-gray-400">${prod.price}</h4>
+                </div>
+                <p className="my-4 w-full">
+                  {prodDesciption(prod.description)}
+                </p>
               </div>
-              <p className="my-4 w-full">{prodDesciption(prod.description)}</p>
+              <ProductAmount buttonLabel="Add to cart" prod={prod} />
             </div>
-            <ProductAmount buttonLabel="Add to cart" prod={prod} />
-          </div>
-        ))}
-        {displayCartItems && <CartItemContainer />}
-      </div>
-    </Layout>
+          ))}
+          {displayCartItems && <CartItemContainer />}
+        </div>
+      </Layout>
+    </>
   );
 }
