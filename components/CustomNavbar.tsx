@@ -6,10 +6,15 @@ import { PowerIcon, UserCircleIcon } from "@heroicons/react/24/outline";
 import SiteLogo from ".img/logo.png";
 
 export const CustomNavbar = ({ children }: PropsWithChildren<object>) => (
-  <nav className="flex flex-col p-4 bg-black/[0.85] fixed w-full z-10">
+  <nav className="flex flex-col p-4 bg-black md:bg-black/[0.91] fixed w-full z-10">
     <div className="flex items-center justify-between">
-      <Link href="/">
-        <Image src={SiteLogo} alt="Site Logo" height={44} />
+      <Link href="/" className="w-full md:w-auto">
+        <Image
+          src={SiteLogo}
+          alt="Site Logo"
+          height={44}
+          className="m-auto md:m-0"
+        />
       </Link>
       <div className="hidden sm:flex flex-auto justify-center mx-4">
         {children}

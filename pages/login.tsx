@@ -47,6 +47,7 @@ export default function LoginPage() {
       setIsLoginValid(isValidPassword);
       if (isValidPassword) {
         loginUser(typedUser);
+        router.push("/settings");
       }
     }
   };
@@ -85,7 +86,7 @@ export default function LoginPage() {
           text-white
         "
           >
-            LOGIN
+            LOGIN TO SENDNET
           </h1>
         }
         className="bg-slate-100 min-h-screen"
@@ -94,7 +95,9 @@ export default function LoginPage() {
           className="flex flex-col md:w-4/12 md:h-4/6 m-auto mt-28 w-11/12 md:my-5 md:mx-auto rounded p-2 bg-white pb-6"
           onSubmit={handleSubmit}
         >
-          <h4 className="font-thin text-xl md:text-normal m-2">Sign in:</h4>
+          <h4 className="font-thin text-xl md:text-normal m-2">
+            Sign Into Your Account:
+          </h4>
           <input
             className="
           w-11/12 px-4 py-2 text-xl md:text-sm font-normal text-gray-700 bg-white border border-solid border-gray-300 rounded m-0 focus:border-blue-600 focus:outline-none self-center mb-6"
@@ -156,7 +159,7 @@ export default function LoginPage() {
           text-center
           "
           >
-            Create Account
+            Create New Account
           </Link>
         </form>
       </Layout>

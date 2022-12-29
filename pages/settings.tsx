@@ -1,9 +1,10 @@
 import { useUsersStore } from ".hooks/usersStore";
 import Image from "next/image";
-import { FormEvent, ChangeEvent, useEffect, useState } from "react";
+import { FormEvent, ChangeEvent, useEffect, useState, use } from "react";
 import { User } from ".entities/user.interface";
 import { Layout } from ".components/Layout";
 import Head from "next/head";
+import Router, { useRouter } from "next/router";
 
 interface UserInput {
   username?: string;
@@ -17,9 +18,6 @@ interface UserInput {
 }
 const inputStyling =
   "px-4 py-2 text-xl md:text-sm font-normal text-gray-700 bg-white border border-solid border-gray-300 rounded m-0 focus:border-blue-600 focus:outline-none self-center";
-async function openUrl(url: string) {
-  window.location.replace(`/${url}`);
-}
 
 export default function ConsolePage() {
   const usr = useUsersStore((state) => state.user);
@@ -27,10 +25,7 @@ export default function ConsolePage() {
   const updateUser = useUsersStore((state) => state.updateUser);
   const logOutUser = useUsersStore((state) => state.logOutUser);
   const [user, setUser] = useState<User>();
-
-  if (usr == undefined) {
-    openUrl("login");
-  }
+  const router = useRouter();
 
   const [userInputs, setUserInputs] = useState<UserInput>({
     username: usr?.username,
@@ -44,8 +39,12 @@ export default function ConsolePage() {
   });
 
   useEffect(() => {
-    setUser(usr);
-  }, [usr]);
+    if (usr == undefined) {
+      router.replace("/login");
+    } else {
+      setUser(usr);
+    }
+  }, [usr, router]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const name = event.target.name;

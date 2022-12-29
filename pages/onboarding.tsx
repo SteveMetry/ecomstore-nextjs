@@ -3,6 +3,7 @@ import { Layout } from ".components/Layout";
 import { User } from ".entities/user.interface";
 import { useUsersStore } from ".hooks/usersStore";
 import Head from "next/head";
+import { useRouter } from "next/router";
 
 interface UserInput {
   id?: number;
@@ -27,6 +28,7 @@ export default function SignUpPage() {
   const [user, setUser] = useState<User>();
   const usersList = useUsersStore((state) => state.usersList);
   const [allUsers, setAllUsers] = useState<User[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
     setAllUsers(usersList);
@@ -51,13 +53,16 @@ export default function SignUpPage() {
     const newUser = {
       id: allUsers[allUsers.length - 1].id + 1,
       mode: "customer",
-      image: "/img/half_person_icon.png",
+      image: `https://robohash.org/${updatedUser.username}`,
       cartItems: []
     };
     Object.assign(newUser, updatedUser);
-    addUser(newUser as User) != false
-      ? loginUser(newUser as User)
-      : console.error("could not add user");
+    if (addUser(newUser as User) !== false) {
+      loginUser(newUser as User);
+      router.push("/settings");
+    } else {
+      console.error("could not add user");
+    }
   };
   return (
     <>

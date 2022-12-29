@@ -1,3 +1,4 @@
+import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -11,11 +12,10 @@ import { ProductSearch } from ".components/ProductSearch";
 import { Product } from ".entities/product.interface";
 import { useCartItemsStore } from ".hooks/cartItemsStore";
 import { getSearchedProducts } from ".hooks/getProducts";
-import Head from "next/head";
 
 const customList = ["pets", "makeup"];
 
-function prodDesciption(description: string) {
+export function prodDesciption(description: string) {
   description = description
     .trim() // trailing spaces
     .replace(/[-;&,]/g, " ") // replace unneccessary characters with single space
@@ -99,12 +99,6 @@ export default function Home() {
   return (
     <>
       <Head key="Sendnet's Shop Homepage">
-        <title>SHOP NOW - SENDNET</title>
-        <meta
-          name="description"
-          content="Shop Sendnet Online, Find the right Products for you Today, View Online Now!"
-        ></meta>
-        <meta name="title" content="SENDNET SHOP"></meta>
         <meta
           name="keywords"
           content="Shop Sendnet Online, Shop Sendnet, Sendnet.co, Sendnet Store, Sendnet Online Store, Find Sendnet Online"
@@ -134,25 +128,27 @@ export default function Home() {
               <PlusIcon className="w-4" />
             )}
           </button>
-          <h1 className="ml-4">Categories: {chosenCategory.toUpperCase()}</h1>
+          <h1 className="ml-4">
+            Categories: {chosenCategory.toUpperCase().replace("-", " ")}
+          </h1>
         </div>
         <div
           className={`${
             displayCategories ? "grid" : "hidden"
           } grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-2 gap-y-4 p-4 md:p-6 text-xs`}
         >
-          {categoryList.map((category, index) => (
+          {categoryList?.map((category, index) => (
             <button
               key={`Category ${index + 1}`}
               className="text-gray-700 uppercase bg-slate-50 rounded-full shadow-md hover:bg-gray-300 hover:shadow-lg focus:bg-gray-300 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-400 active:shadow-lg p-2"
               onClick={() => onCategoryClick(category)}
             >
-              {category}
+              {category.replace("-", " ")}
             </button>
           ))}
         </div>
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-8 p-4 md:p-6">
-          {products.map((prod) => (
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 p-4 md:p-6">
+          {products?.map((prod) => (
             <div
               key={prod.id}
               className="shadow-xl rounded-xl flex flex-col justify-between items-center p-4 bg-white"
@@ -163,7 +159,7 @@ export default function Home() {
                   className="relative my-4"
                   style={{
                     aspectRatio: "3/2",
-                    height: "8rem",
+                    height: "8.1rem",
                     maxWidth: "9rem",
                     margin: "auto"
                   }}

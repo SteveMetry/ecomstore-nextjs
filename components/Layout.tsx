@@ -14,7 +14,7 @@ export const Layout = ({
 }: PropsWithChildren<LayoutProp>) => (
   <div className={className}>
     <CustomNavbar>{navbarChildren}</CustomNavbar>
-    <div className="h-20"></div>
+    <div className="h-40 md:h-20"></div>
     {children}
   </div>
 );

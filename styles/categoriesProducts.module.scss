@@ -1,0 +1,19 @@
+.products {
+  display: grid;
+  gap:2rem;
+  width: 98vw;
+  overflow-x: scroll;
+  align-self: center;
+  scrollbar-width: none;
+  justify-items: center;
+  padding: 1.2rem;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@media screen and (min-device-width:650px) {
+  .products {
+    display: -webkit-inline-box;
+  }
+}

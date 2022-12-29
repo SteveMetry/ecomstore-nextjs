@@ -26,7 +26,7 @@ const defaultUserList: User[] = [
     lastname: "smith",
     age: 2,
     gender: "male",
-    image: "/img/half_person_icon.png",
+    image: "https://robohash.org/admin3",
     cartItems: []
   },
   {
@@ -40,7 +40,7 @@ const defaultUserList: User[] = [
     lastname: "metry",
     age: 19,
     gender: "Man",
-    image: "/img/half_person_icon.png",
+    image: "https://robohash.org/admin2",
     cartItems: []
   },
   {
@@ -54,7 +54,7 @@ const defaultUserList: User[] = [
     lastname: "yusif",
     age: 18,
     gender: "Man",
-    image: "/img/half_person_icon.png",
+    image: "https://robohash.org/admin1",
     cartItems: []
   }
 ];
@@ -115,7 +115,6 @@ export const useUsersStore = create<UserState>()(
       const isUserDataValid = isUserValid(chosenUser, get().usersList);
       if (isUserDataValid.every((curVal: boolean) => curVal === true)) {
         set((state) => ({ usersList: [...state.usersList, chosenUser] }));
-        console.log("added User", get().usersList);
         return true;
       }
       return false;
@@ -135,11 +134,10 @@ export const useUsersStore = create<UserState>()(
     userExist: (chosenUser) => {
       return !!get().usersList.find((item) => item.id === chosenUser.id);
     },
-    loginUser: (chosenUser, redirect) => {
+    loginUser: (chosenUser) => {
       set(() => ({
         user: chosenUser
       }));
-      window.location.replace(`${redirect ? `/${redirect}` : "/settings"}`);
       return true;
     },
     isUserDataValid: (chosenUser) => {

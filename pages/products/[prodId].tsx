@@ -13,6 +13,7 @@ import { getProducts } from ".hooks/getProducts";
 import { CartItemContainer } from ".components/CartItemContainer";
 import { useCartItemsStore } from ".hooks/cartItemsStore";
 import Head from "next/head";
+import { CategoriesProducts } from ".components/CategoriesProducts";
 
 interface Path {
   params: {
@@ -20,7 +21,22 @@ interface Path {
   };
 }
 
+async function getCategoryProducts(
+  category: string,
+  setProds: (prod: Product[]) => void
+) {
+  const categoryProducts = await fetch(`/api/products`).then((response) =>
+    response.json()
+  );
+  const prods: Product[] = await categoryProducts.products.filter(
+    (item: Product) => item.category === category
+  );
+  setProds(prods);
+}
+
 export default function ProductPage(prod: Product) {
+  const [categoryProducts, setCategoryProducts] = useState(false);
+  const [prods, setProds] = useState<Product[]>([]);
   const [searchInput, setSearchInput] = useState("");
   const [displayCartItems, setDisplayCartItems] = useCartItemsStore((state) => [
     state.displayCartItems,
@@ -36,6 +52,15 @@ export default function ProductPage(prod: Product) {
   useEffect(() => {
     setDisplayAmount(true);
   }, [setDisplayCartItems]);
+
+  if (Object.keys(prod).length === 0) {
+    return <p>Product Not Found</p>;
+  }
+
+  if (categoryProducts === false) {
+    getCategoryProducts(prod.category, setProds);
+    setCategoryProducts(true);
+  }
 
   return (
     <>
@@ -78,16 +103,16 @@ export default function ProductPage(prod: Product) {
             </button>
           </div>
         }
-        className="min-h-screen"
+        className="overflow-x-hidden"
       >
-        <div className="flex flex-col w-full mt-24">
-          <h1 className="text-center text-gray-900 text-4xl font-light mb-4">
+        <div className="flex flex-col w-full mt-24 md:mt-12">
+          <h1 className="text-center text-gray-900 text-4xl font-light mb-2">
             {prod.title}
           </h1>
           <div className="grid grid-rows-2 md:grid-rows-1 md:grid-cols-2">
             <div
               className="relative mx-8 my-20"
-              style={{ aspectRatio: "3/2", height: "21rem", margin: "auto" }}
+              style={{ aspectRatio: "3/2", height: "20vh", margin: "auto" }}
             >
               <Image
                 className="rounded-sm object-contain"
@@ -100,6 +125,7 @@ export default function ProductPage(prod: Product) {
               style={{ width: "70%", height: "90%" }}
               className="shadow-md rounded-xl flex flex-col justify-between p-8 bg-white my-8 mx-16 text-gray-700"
             >
+              <h3 className="font-light">Price: ${prod.price}</h3>
               <h3 className="font-light">Category: {prod.category}</h3>
               <h3 className="font-light">{prod.rating}☆</h3>
               <h3 className="font-light">Strock: {prod.stock} Left in Stock</h3>
@@ -111,13 +137,19 @@ export default function ProductPage(prod: Product) {
               />
             </div>
           </div>
-
           <h4 className="text-xl font-light leading-relaxed text-center my-8 text-gray-800">
             {prod.description}
           </h4>
         </div>
         {displayCartItems && <CartItemContainer />}
       </Layout>
+      <h2 className="font-extrabold tracking-wider text-center p-6 bg-slate-300 text-xl text-white">
+        More From - {prod.category.replace("-", " ")}
+      </h2>
+      <CategoriesProducts
+        products={prods}
+        excludeProdsByIds={prod.id.toString()}
+      />
     </>
   );
 }
@@ -125,7 +157,7 @@ export default function ProductPage(prod: Product) {
 export async function getStaticPaths() {
   let pathList: Path[] = [];
   const staticPaths = () => {
-    for (let i = 1; i <= 99; i++) {
+    for (let i = 1; i <= 106; i++) {
       pathList.push({
         params: {
           prodId: i.toString()
@@ -142,10 +174,10 @@ export async function getStaticPaths() {
 
 export async function getStaticProps(paths: Path) {
   const prods = await getProducts();
-  const result = prods.products.find(
+  const result = await prods.products.find(
     (item: Product) => item.id === parseInt(paths.params.prodId)
   );
   return {
-    props: result
+    props: result || {}
   };
 }
