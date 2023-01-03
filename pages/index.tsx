@@ -65,8 +65,7 @@ export default function Home() {
     fetch(`https://dummyjson.com/products/categories`)
       .then((response) => response.json())
       .then((categories) => {
-        const initialCatList = [...categories, ...customList];
-        setCategoryList(initialCatList);
+        setCategoryList([...(categories || []), ...customList]);
       });
     if (router.query.search == null) {
       // hardcode minId and maxId to reduce amount of requests being called

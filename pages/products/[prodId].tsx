@@ -1,28 +1,27 @@
+import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import makeup from ".data/makeup.json";
-import pets from ".data/pets.json";
 import { useEffect, useState } from "react";
 import {
   MagnifyingGlassIcon,
   ShoppingCartIcon
 } from "@heroicons/react/24/outline";
 
+import { CartItemContainer } from ".components/CartItemContainer";
+import { CategoriesProducts } from ".components/CategoriesProducts";
 import { Layout } from ".components/Layout";
 import { ProductAmount } from ".components/ProductAmount";
+import makeup from ".data/makeup.json";
+import pets from ".data/pets.json";
 import { Product } from ".entities/product.interface";
 import { getProducts } from ".hooks/getProducts";
-import { CartItemContainer } from ".components/CartItemContainer";
 import { useCartItemsStore } from ".hooks/cartItemsStore";
-import Head from "next/head";
-import { CategoriesProducts } from ".components/CategoriesProducts";
 
 interface Path {
   params: {
     prodId: string;
   };
 }
-const customList = ["pets", "makeup"];
 
 async function getCategoryProducts(
   category: string,
@@ -58,7 +57,7 @@ export default function ProductPage(prod: Product) {
     setDisplayAmount(true);
   }, [setDisplayCartItems]);
 
-  if (Object.keys(prod).length === 0) {
+  if (prod == null) {
     return <p>Product Not Found</p>;
   }
 
@@ -159,30 +158,30 @@ export default function ProductPage(prod: Product) {
   );
 }
 
-export async function getStaticPaths() {
-  let pathList: Path[] = [];
-  const staticPaths = () => {
-    for (let i = 1; i <= 106; i++) {
-      pathList.push({
-        params: {
-          prodId: i.toString()
-        }
-      });
-    }
-    return pathList;
-  };
-  return {
-    paths: staticPaths(),
-    fallback: true // can also be true or 'blocking'
-  };
-}
+// export async function getStaticPaths() {
+//   let pathList: Path[] = [];
+//   const staticPaths = () => {
+//     for (let i = 1; i <= 106; i++) {
+//       pathList.push({
+//         params: {
+//           prodId: i.toString()
+//         }
+//       });
+//     }
+//     return pathList;
+//   };
+//   return {
+//     paths: staticPaths(),
+//     fallback: true // can also be true or 'blocking'
+//   };
+// }
 
-export async function getStaticProps(paths: Path) {
+export async function getServerSideProps(context: any) {
   const prods = await getProducts();
   const result = await prods.products.find(
-    (item: Product) => item.id === parseInt(paths.params.prodId)
+    (item: Product) => item.id === parseInt(context.params.prodId)
   );
   return {
-    props: result || {}
+    props: result || null
   };
 }
