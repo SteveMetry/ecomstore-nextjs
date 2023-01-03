@@ -2,6 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { NextSeo } from "next-seo";
 import { useEffect, useState } from "react";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 
@@ -98,6 +99,10 @@ export default function Home() {
 
   return (
     <>
+      <NextSeo
+        title="SHOP NOW"
+        description="Shop Sendnet Online, Find the right Products for you Today, View Online Now!"
+      />
       <Head key="Sendnet's Shop Homepage">
         <meta
           name="keywords"

@@ -1,5 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
+import makeup from ".data/makeup.json";
+import pets from ".data/pets.json";
 import { useEffect, useState } from "react";
 import {
   MagnifyingGlassIcon,
@@ -20,17 +22,20 @@ interface Path {
     prodId: string;
   };
 }
+const customList = ["pets", "makeup"];
 
 async function getCategoryProducts(
   category: string,
   setProds: (prod: Product[]) => void
 ) {
-  const categoryProducts = await fetch(`/api/products`).then((response) =>
-    response.json()
-  );
-  const prods: Product[] = await categoryProducts.products.filter(
-    (item: Product) => item.category === category
-  );
+  const categoryProducts = await fetch(
+    `https://dummyjson.com/products/category/${category}`
+  ).then((response) => response.json());
+  const prods: Product[] = await [
+    ...categoryProducts.products,
+    ...makeup.products,
+    ...pets.products
+  ].filter((item: Product) => item.category === category);
   setProds(prods);
 }
 
