@@ -27,11 +27,11 @@ export const ProductSearch = ({
   };
 
   return (
-    <>
-      <div className="flex items-stretch max-w-lg mr-6">
+    <div className="flex w-full justify-between">
+      <div className="flex items-stretch md:w-5/12 m-auto">
         <input
           type="search"
-          className="flex-auto min-w-0 w-full px-3 py-1.5 rounded-l-lg text-gray-700 bg-white transition ease-in-out focus:text-gray-700 focus:bg-white focus:outline-none"
+          className="flex-auto min-w-0 w-full px-3 py-1.5 md:rounded-l-lg text-gray-700 bg-white transition ease-in-out focus:text-gray-700 focus:bg-white focus:outline-none"
           placeholder="Search Products"
           value={searchInput}
           onChange={(event) => setSearchInput(event.target.value)}
@@ -48,14 +48,16 @@ export const ProductSearch = ({
           <MagnifyingGlassIcon className="w-4" />
         </button>
       </div>
-      <button className="flex" onClick={onCartBtnClick}>
-        <ShoppingCartIcon className="h-full text-white w-10" />
-        <span className="bg-white px-2 rounded-full relative right-4">
-          {displayAmount
-            ? cartItems.map((item) => item.amount).reduce((a, b) => a + b, 0)
-            : 0}
-        </span>
-      </button>
-    </>
+      <div className="self-end">
+        <button className="flex" onClick={onCartBtnClick}>
+          <ShoppingCartIcon className="h-full text-white w-10" />
+          <span className="bg-white px-2 rounded-full relative right-4">
+            {displayAmount
+              ? cartItems.map((item) => item.amount).reduce((a, b) => a + b, 0)
+              : 0}
+          </span>
+        </button>
+      </div>
+    </div>
   );
 };

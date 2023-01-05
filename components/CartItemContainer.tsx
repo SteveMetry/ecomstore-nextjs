@@ -25,7 +25,11 @@ export const CartItemContainer = () => {
         className="bg-black opacity-70 fixed top-0 left-0 w-screen h-screen z-20"
         onClick={onOverlayClick}
       ></div>
-      <div className="fixed top-0 right-0 bg-slate-200 w-96 h-screen flex flex-col p-4 overflow-y-auto z-20">
+      <div className="fixed top-0 right-0 bg-slate-200 w-80 md:w-96 h-screen flex flex-col p-4 overflow-y-auto z-20">
+        <XCircleIcon
+          className="w-8 cursor-pointer"
+          onClick={() => setDisplayCartItems(false)}
+        />
         <h2 className="text-center font-normal">My Cart</h2>
         {cartItems.map((prod, index) => (
           <div key={`Cart item ${index + 1}`} className="mt-4">
@@ -36,7 +40,9 @@ export const CartItemContainer = () => {
               <XCircleIcon className="w-5" />
             </button>
             <div className="bg-white rounded-xl flex flex-col p-4">
-              <h3 className="w-72 truncate mb-2">{prod.title.toUpperCase()}</h3>
+              <h3 className="w-full truncate mb-2">
+                {prod.title.toUpperCase()}
+              </h3>
               <div className="flex justify-between items-center">
                 <div className="relative h-20 w-20">
                   <Image src={prod.thumbnail} alt={prod.title} fill />

@@ -1,11 +1,12 @@
 import Head from "next/head";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import { CartItemBlock } from ".components/CartItemBlock";
 import { Layout } from ".components/Layout";
 import { CartItem } from ".entities/cartItem.interface";
 import { useCartItemsStore } from ".hooks/cartItemsStore";
+import { pay } from ".hooks/pay";
+import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 
 export default function CheckoutPage() {
   const [cartItems, setCartItemAmount] = useCartItemsStore((state) => [
@@ -74,8 +75,14 @@ export default function CheckoutPage() {
             <h4 className="text-right">${totalPrice / 10}</h4>
             <h4>Total:</h4>
             <h4 className="text-right">${totalPrice + totalPrice / 10}</h4>
-            <Link
-              href="/pay"
+            <button
+              onClick={() =>
+                pay({
+                  lineItems: [
+                    { price: "price_1MMrHOFOFZSSkdZmQvEI5nt6", quantity: 1 }
+                  ]
+                })
+              }
               className="
             bg-blue-400
             rounded
@@ -89,10 +96,12 @@ export default function CheckoutPage() {
           "
             >
               Pay Now
-            </Link>
+            </button>
           </div>
         </div>
       </Layout>
     </>
   );
 }
+
+export const getServerSideProps = withPageAuthRequired();
