@@ -1,11 +1,11 @@
-import { useRouter } from "next/router";
+import Head from "next/head";
+import Link from "next/link";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 import { Layout } from ".components/Layout";
 import { User } from ".entities/user.interface";
 import { useUsersStore } from ".hooks/usersStore";
-import Link from "next/link";
-import Head from "next/head";
 
 interface UserInput {
   username?: string;
@@ -20,11 +20,13 @@ export default function LoginPage() {
   const [userInputs, setUserInputs] = useState<UserInput>({});
   const [isLoginValid, setIsLoginValid] = useState(true);
   const loginUser = useUsersStore((state) => state.loginUser);
+
   if (user) {
     if (!!allUsers.find((item) => item.id === user.id)) {
       router.push("/settings");
     }
   }
+
   useEffect(() => {
     setAllUsers(usersList);
   }, [usersList]);
@@ -59,22 +61,19 @@ export default function LoginPage() {
         <meta
           name="description"
           content="Sign into your account Here, to view recent purchases and your personal information, please login to view your settings"
-        ></meta>
+        />
         <meta
           name="title"
           content="Login to SENDNET SHOP - SIGN IN TO SENDNET"
-        ></meta>
+        />
         <meta
           name="keywords"
           content="login my sendnet account, my sendnet account, sendnet login, login sendnet, Login Shop here, Login Sendnet Online, sign in to your account here, Sign In SendNet Here"
-        ></meta>
-        <meta name="robots" content="index, follow"></meta>
-        <meta
-          http-equiv="Content-Type"
-          content="text/html; charset=utf-8"
-        ></meta>
-        <meta name="language" content="English"></meta>
-        <meta name="revisit-after" content="1 days"></meta>
+        />
+        <meta name="robots" content="index, follow" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="language" content="English" />
+        <meta name="revisit-after" content="1 days" />
       </Head>
       <Layout
         navbarChildren={
@@ -100,7 +99,7 @@ export default function LoginPage() {
           </h4>
           <input
             className="
-          w-11/12 px-4 py-2 text-xl md:text-sm font-normal text-gray-700 bg-white border border-solid border-gray-300 rounded m-0 focus:border-blue-600 focus:outline-none self-center mb-6"
+              w-11/12 px-4 py-2 text-xl md:text-sm font-normal text-gray-700 bg-white border border-solid border-gray-300 rounded m-0 focus:border-blue-600 focus:outline-none self-center mb-6"
             placeholder="The Username.."
             name="username"
             value={userInputs.username || ""}
@@ -109,7 +108,7 @@ export default function LoginPage() {
           <input
             type="password"
             className="
-          w-11/12 px-4 py-2 text-xl md:text-sm font-normal text-gray-700 bg-white border border-solid border-gray-300 rounded m-0 focus:border-blue-600 focus:outline-none self-center"
+              w-11/12 px-4 py-2 text-xl md:text-sm font-normal text-gray-700 bg-white border border-solid border-gray-300 rounded m-0 focus:border-blue-600 focus:outline-none self-center"
             placeholder="Password Please.."
             name="password"
             value={userInputs.password || ""}
@@ -126,38 +125,38 @@ export default function LoginPage() {
           <button
             type="submit"
             className="
-            w-11/12
-            px-4
-            py-1.5
-            bg-blue-400
-            text-white
-            font-bold
-            rounded
-            hover:bg-blue-500
-            focus:bg-blue-500
-            active:bg-blue-600
-            ml-4
-            my-2
-          "
+              w-11/12
+              px-4
+              py-1.5
+              bg-blue-400
+              text-white
+              font-bold
+              rounded
+              hover:bg-blue-500
+              focus:bg-blue-500
+              active:bg-blue-600
+              ml-4
+              my-2
+            "
           >
             Login
           </button>
           <Link
             href="/onboarding"
             className="
-          w-11/12
-          px-4
-          py-1.5
-          bg-blue-400
-          text-white
-          font-bold
-          rounded
-          hover:bg-blue-500
-          focus:bg-blue-500
-          active:bg-blue-600
-          ml-4
-          text-center
-          "
+              w-11/12
+              px-4
+              py-1.5
+              bg-blue-400
+              text-white
+              font-bold
+              rounded
+              hover:bg-blue-500
+              focus:bg-blue-500
+              active:bg-blue-600
+              ml-4
+              text-center
+            "
           >
             Create New Account
           </Link>

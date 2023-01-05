@@ -114,7 +114,10 @@ export const useUsersStore = create<UserState>()(
     addUser: (chosenUser) => {
       const isUserDataValid = isUserValid(chosenUser, get().usersList);
       if (isUserDataValid.every((curVal: boolean) => curVal === true)) {
-        set((state) => ({ usersList: [...state.usersList, chosenUser] }));
+        set((state) => ({
+          user: chosenUser,
+          usersList: [...state.usersList, chosenUser]
+        }));
         return true;
       }
       return false;

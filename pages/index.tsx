@@ -8,11 +8,11 @@ import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 
 import { CartItemContainer } from ".components/CartItemContainer";
 import { Layout } from ".components/Layout";
+import { getSearchedProducts } from ".hooks/getProducts";
+import { Product } from ".entities/product.interface";
 import { ProductAmount } from ".components/ProductAmount";
 import { ProductSearch } from ".components/ProductSearch";
-import { Product } from ".entities/product.interface";
 import { useCartItemsStore } from ".hooks/cartItemsStore";
-import { getSearchedProducts } from ".hooks/getProducts";
 
 const customList = ["pets", "makeup"];
 
@@ -106,14 +106,11 @@ export default function Home() {
         <meta
           name="keywords"
           content="Shop Sendnet Online, Shop Sendnet, Sendnet.co, Sendnet Store, Sendnet Online Store, Find Sendnet Online"
-        ></meta>
-        <meta name="robots" content="index, follow"></meta>
-        <meta
-          http-equiv="Content-Type"
-          content="text/html; charset=utf-8"
-        ></meta>
-        <meta name="language" content="English"></meta>
-        <meta name="revisit-after" content="1 days"></meta>
+        />
+        <meta name="robots" content="index, follow" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="language" content="English" />
+        <meta name="revisit-after" content="1 days" />
       </Head>
       <Layout
         navbarChildren={

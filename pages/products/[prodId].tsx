@@ -9,12 +9,12 @@ import {
 
 import { CartItemContainer } from ".components/CartItemContainer";
 import { CategoriesProducts } from ".components/CategoriesProducts";
+import { getProducts } from ".hooks/getProducts";
 import { Layout } from ".components/Layout";
-import { ProductAmount } from ".components/ProductAmount";
 import makeup from ".data/makeup.json";
 import pets from ".data/pets.json";
 import { Product } from ".entities/product.interface";
-import { getProducts } from ".hooks/getProducts";
+import { ProductAmount } from ".components/ProductAmount";
 import { useCartItemsStore } from ".hooks/cartItemsStore";
 
 interface Path {
@@ -73,7 +73,7 @@ export default function ProductPage(prod: Product) {
         <meta
           name="description"
           content={`SENDNET - $${prod.price}. ${prod.description}`}
-        ></meta>
+        />
       </Head>
       <Layout
         navbarChildren={

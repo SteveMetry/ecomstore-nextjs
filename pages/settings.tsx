@@ -1,10 +1,11 @@
-import { useUsersStore } from ".hooks/usersStore";
-import Image from "next/image";
-import { FormEvent, ChangeEvent, useEffect, useState, use } from "react";
-import { User } from ".entities/user.interface";
-import { Layout } from ".components/Layout";
 import Head from "next/head";
-import Router, { useRouter } from "next/router";
+import Image from "next/image";
+import { useRouter } from "next/router";
+import { FormEvent, ChangeEvent, useEffect, useState } from "react";
+
+import { Layout } from ".components/Layout";
+import { useUsersStore } from ".hooks/usersStore";
+import { User } from ".entities/user.interface";
 
 interface UserInput {
   username?: string;
@@ -20,12 +21,12 @@ const inputStyling =
   "px-4 py-2 text-xl md:text-sm font-normal text-gray-700 bg-white border border-solid border-gray-300 rounded m-0 focus:border-blue-600 focus:outline-none self-center";
 
 export default function ConsolePage() {
-  const usr = useUsersStore((state) => state.user);
   const isUserDataValid = useUsersStore((state) => state.isUserDataValid);
-  const updateUser = useUsersStore((state) => state.updateUser);
   const logOutUser = useUsersStore((state) => state.logOutUser);
-  const [user, setUser] = useState<User>();
   const router = useRouter();
+  const updateUser = useUsersStore((state) => state.updateUser);
+  const usr = useUsersStore((state) => state.user);
+  const [user, setUser] = useState<User>();
 
   const [userInputs, setUserInputs] = useState<UserInput>({
     username: usr?.username,
@@ -72,19 +73,16 @@ export default function ConsolePage() {
         <meta
           name="description"
           content="manage account, edit personal information, update postal address, and purchase items all with your sendnet account"
-        ></meta>
-        <meta name="title" content="MY SENDNET SETTINGS - SENDNET SHOP"></meta>
+        />
+        <meta name="title" content="MY SENDNET SETTINGS - SENDNET SHOP" />
         <meta
           name="keywords"
           content="manage my sendnet User, view my sendnet account, buy sendnet products, shop sendnet products, view sendnet settings, manage settings, manage account"
-        ></meta>
-        <meta name="robots" content="index, follow"></meta>
-        <meta
-          http-equiv="Content-Type"
-          content="text/html; charset=utf-8"
-        ></meta>
-        <meta name="language" content="English"></meta>
-        <meta name="revisit-after" content="1 days"></meta>
+        />
+        <meta name="robots" content="index, follow" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="language" content="English" />
+        <meta name="revisit-after" content="1 days" />
       </Head>
       <Layout
         navbarChildren={

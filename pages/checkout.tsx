@@ -1,3 +1,4 @@
+import Head from "next/head";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -5,7 +6,6 @@ import { CartItemBlock } from ".components/CartItemBlock";
 import { Layout } from ".components/Layout";
 import { CartItem } from ".entities/cartItem.interface";
 import { useCartItemsStore } from ".hooks/cartItemsStore";
-import Head from "next/head";
 
 export default function CheckoutPage() {
   const [cartItems, setCartItemAmount] = useCartItemsStore((state) => [
@@ -29,19 +29,16 @@ export default function CheckoutPage() {
         <meta
           name="description"
           content="Create Your Cart And Checkout your items Here - Sendnet Checkout Page"
-        ></meta>
-        <meta name="title" content="CHECKOUT CART - SENDNET SHOP"></meta>
+        />
+        <meta name="title" content="CHECKOUT CART - SENDNET SHOP" />
         <meta
           name="keywords"
           content="Checkout your products here, Finilise Cart here, Sendnet's Online Chekcout, View Cart Now!, Sendnet Cart, sendnet checkout, sendnet pay here, sendnet, send net, SendNet"
-        ></meta>
-        <meta name="robots" content="index, follow"></meta>
-        <meta
-          http-equiv="Content-Type"
-          content="text/html; charset=utf-8"
-        ></meta>
-        <meta name="language" content="English"></meta>
-        <meta name="revisit-after" content="1 days"></meta>
+        />
+        <meta name="robots" content="index, follow" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="language" content="English" />
+        <meta name="revisit-after" content="1 days" />
       </Head>
 
       <Layout

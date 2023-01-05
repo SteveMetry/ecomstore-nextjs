@@ -1,10 +1,10 @@
+import Head from "next/head";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { useRouter } from "next/router";
+
 import { Layout } from ".components/Layout";
 import { User } from ".entities/user.interface";
 import { useUsersStore } from ".hooks/usersStore";
-import Head from "next/head";
-import { useRouter } from "next/router";
-
 interface UserInput {
   id?: number;
   mode?: string;
@@ -23,23 +23,15 @@ const inputSyling =
   "w-11/12 px-4 py-2 text-xl md:text-sm font-normal text-gray-700 bg-white border border-solid border-gray-300 rounded m-0 focus:border-blue-600 focus:outline-none self-center";
 
 export default function SignUpPage() {
-  const usr = useUsersStore((state) => state.user);
-  const loginUser = useUsersStore((state) => state.loginUser);
-  const [user, setUser] = useState<User>();
-  const usersList = useUsersStore((state) => state.usersList);
+  const addUser = useUsersStore((state) => state.addUser);
   const [allUsers, setAllUsers] = useState<User[]>([]);
+  const [userInputs, setUserInputs] = useState<UserInput>({});
+  const usersList = useUsersStore((state) => state.usersList);
   const router = useRouter();
 
   useEffect(() => {
     setAllUsers(usersList);
   }, [usersList]);
-
-  const [userInputs, setUserInputs] = useState<UserInput>({});
-
-  const addUser = useUsersStore((state) => state.addUser);
-  useEffect(() => {
-    setUser(usr);
-  }, [usr]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const name = event.target.name;
@@ -58,7 +50,6 @@ export default function SignUpPage() {
     };
     Object.assign(newUser, updatedUser);
     if (addUser(newUser as User) !== false) {
-      loginUser(newUser as User);
       router.push("/settings");
     } else {
       console.error("could not add user");
@@ -71,22 +62,16 @@ export default function SignUpPage() {
         <meta
           name="description"
           content="Create your SENDNET ACCOUNT NOW, Manage purchases, create reviews, view personal information and more, Create for free Today"
-        ></meta>
-        <meta
-          name="title"
-          content="Create SENDNET Account - SENDNET SHOP"
-        ></meta>
+        />
+        <meta name="title" content="Create SENDNET Account - SENDNET SHOP" />
         <meta
           name="keywords"
           content="create my sendnet User, create my sendnet account, Free SENDNET Account, Create your account today, Create sendnet, Sendnet, shop sendnet, sendnet store"
-        ></meta>
-        <meta name="robots" content="index, follow"></meta>
-        <meta
-          http-equiv="Content-Type"
-          content="text/html; charset=utf-8"
-        ></meta>
-        <meta name="language" content="English"></meta>
-        <meta name="revisit-after" content="1 days"></meta>
+        />
+        <meta name="robots" content="index, follow" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="language" content="English" />
+        <meta name="revisit-after" content="1 days" />
       </Head>
       <Layout
         navbarChildren={

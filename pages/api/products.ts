@@ -1,5 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-
 import { getProducts } from ".hooks/getProducts";
 
 type Data = {
