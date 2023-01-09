@@ -1,8 +1,8 @@
-import { withPageAuthRequired } from "@auth0/nextjs-auth0";
-import { useUser } from "@auth0/nextjs-auth0/client";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { withPageAuthRequired } from "@auth0/nextjs-auth0";
+import { useUser } from "@auth0/nextjs-auth0/client";
 
 export default function OrderPage() {
   const router = useRouter();
@@ -17,6 +17,7 @@ export default function OrderPage() {
   if (params.order_id === undefined) {
     return <h1>please Purchase an Item</h1>;
   }
+
   return (
     param &&
     user && (

@@ -1,12 +1,12 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
+import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 
 import { CartItemBlock } from ".components/CartItemBlock";
 import { Layout } from ".components/Layout";
 import { CartItem } from ".entities/cartItem.interface";
 import { useCartItemsStore } from ".hooks/cartItemsStore";
-import { pay } from ".hooks/pay";
-import { withPageAuthRequired } from "@auth0/nextjs-auth0";
+import { stripePay } from ".hooks/stripePay";
 
 export default function CheckoutPage() {
   const [cartItems, setCartItemAmount] = useCartItemsStore((state) => [
@@ -77,11 +77,9 @@ export default function CheckoutPage() {
             <h4 className="text-right">${totalPrice + totalPrice / 10}</h4>
             <button
               onClick={() =>
-                pay({
-                  lineItems: [
-                    { price: "price_1MMrHOFOFZSSkdZmQvEI5nt6", quantity: 1 }
-                  ]
-                })
+                stripePay([
+                  { price: "price_1MMrHOFOFZSSkdZmQvEI5nt6", quantity: 1 }
+                ])
               }
               className="
             bg-blue-400
