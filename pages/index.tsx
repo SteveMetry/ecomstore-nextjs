@@ -70,17 +70,12 @@ export default function Home() {
     if (router.query.search == null) {
       // hardcode minId and maxId to reduce amount of requests being called
       const minId = 1;
-      const maxId = 100;
+      const maxId = 80; //minus amount of products u want to show
       const randomIds: number[] = [];
       const initialProdList: Product[] = [];
-      for (let i = 0; i < 21; i++) {
-        let randomProdId =
-          Math.floor(Math.random() * (maxId - minId + 1)) + minId;
-        while (randomIds.find((id) => id === randomProdId)) {
-          randomProdId =
-            Math.floor(Math.random() * (maxId - minId + 1)) + minId;
-        }
-        randomIds.push(randomProdId);
+      const start = Math.floor(Math.random() * (maxId - minId + 1)) + minId;
+      for (let i = start; i < start + 20; i++) {
+        randomIds.push(i);
       }
       randomIds.forEach((id) => {
         fetch(`https://dummyjson.com/products/${id}`)

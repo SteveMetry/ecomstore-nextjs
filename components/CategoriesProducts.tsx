@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ProductAmount } from "./ProductAmount";
 import { prodDesciption } from ".pages/index";
 import styles from ".styles/categoriesProducts.module.scss";
+import Script from "next/script";
 
 interface CategoriesProductsProp {
   products: Product[];
@@ -59,6 +60,20 @@ export const CategoriesProducts = ({
           </div>
         );
       })}
+      <Script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3159767499477222"
+        crossOrigin="anonymous"
+      ></Script>
+      <ins
+        className="adsbygoogle"
+        style={{ display: "block" }}
+        data-ad-client="ca-pub-3159767499477222"
+        data-ad-slot="8931114010"
+        data-ad-format="auto"
+        data-full-width-responsive="true"
+      ></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
     </div>
   );
 };

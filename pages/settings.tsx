@@ -1,10 +1,10 @@
 import Head from "next/head";
 import Image from "next/image";
-
 import Link from "next/link";
-import { Layout } from ".components/Layout";
-import { useUser } from "@auth0/nextjs-auth0/client";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
+import { useUser } from "@auth0/nextjs-auth0/client";
+
+import { Layout } from ".components/Layout";
 
 const inputStyling =
   "px-4 py-2 text-xl md:text-sm font-normal text-gray-700 bg-white border border-solid border-gray-300 rounded m-0 focus:border-blue-600 focus:outline-none self-center";
@@ -107,10 +107,10 @@ export default function ConsolePage() {
             </div>
             <div
               className="relative mx-8 my-20"
-              style={{ aspectRatio: "3/2", height: "3.5rem", margin: "auto" }}
+              style={{ aspectRatio: "1", height: "3.5rem", margin: "auto" }}
             >
               <Image
-                className="rounded-sm object-contain "
+                className="rounded-full object-contain "
                 src={`${user.picture}`}
                 alt={`${user.nickname} profile pic`}
                 fill

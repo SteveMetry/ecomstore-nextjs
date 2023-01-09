@@ -158,24 +158,6 @@ export default function ProductPage(prod: Product) {
   );
 }
 
-// export async function getStaticPaths() {
-//   let pathList: Path[] = [];
-//   const staticPaths = () => {
-//     for (let i = 1; i <= 106; i++) {
-//       pathList.push({
-//         params: {
-//           prodId: i.toString()
-//         }
-//       });
-//     }
-//     return pathList;
-//   };
-//   return {
-//     paths: staticPaths(),
-//     fallback: true // can also be true or 'blocking'
-//   };
-// }
-
 export async function getServerSideProps(context: any) {
   const prods = await getProducts();
   const result = await prods.products.find(
